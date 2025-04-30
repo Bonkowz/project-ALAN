@@ -1,0 +1,27 @@
+{
+  "type": "module",
+  "name": "project-agriculture-livestock-assets-network",
+  "version": "1.0.0",
+  "description": "Group 6 CMSC 100 Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://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@github.com/CMSC-100-2S-AY2024-2025/project-agriculture-livestock-assets-network.git"
+  },
+  "author": "Bantilan, Guevarra, Guzman, Vender",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CMSC-100-2S-AY2024-2025/project-agriculture-livestock-assets-network/issues"
+  },
+  "homepage": "https://github.com/CMSC-100-2S-AY2024-2025/project-agriculture-livestock-assets-network#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mongoose": "^8.14.1",
+    "needle": "^3.3.1"
+  }
+}
