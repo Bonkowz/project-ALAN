@@ -5,6 +5,6 @@ const productSchema = new mongoose.Schema({
   productDescription: String,
   productType: Number,
   productQty: Number
-}, { collection: 'productData' }); 
+}, { collection: 'product' }); 
 
 export default mongoose.model('Product', productSchema);
