@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 
 const transactionSchema = new mongoose.Schema({
-  productId: Number,
+  transactionId: String,
+  productId: String,
   orderQty: Number,
   orderStatus: Number,
   email: String,
@@ -10,3 +11,4 @@ const transactionSchema = new mongoose.Schema({
 }, { collection: 'transaction' }); 
 
 export default mongoose.model('Transaction', transactionSchema);
+
