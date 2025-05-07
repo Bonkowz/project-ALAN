@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import ProductListingUser from './components/ProductListingUser';
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -11,14 +12,15 @@ function App() {
 
   return (
     <div>
-      <h1>Product List</h1>
+      {/* <h1>Product List</h1>
       <ul>
         {products.map(p => (
           <li key={p._id}>
             {p.productName} ({p.productDescription}) - Qty: {p.productQty}
           </li>
         ))}
-      </ul>
+      </ul> */}
+      <ProductListingUser></ProductListingUser>
     </div>
   );
 }
