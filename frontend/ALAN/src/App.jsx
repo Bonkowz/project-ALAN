@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import ProductListingUser from './components/ProductListingUser';
+import UserProducts from './components/UserProducts';
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -12,7 +12,7 @@ function App() {
 
   return (
     <div>
-      <ProductListingUser data={products}></ProductListingUser>
+      <UserProducts data={products}></UserProducts>
     </div>
   );
 }

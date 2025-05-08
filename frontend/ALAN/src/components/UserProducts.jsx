@@ -2,7 +2,7 @@ import React from 'react'
 import ProductCard from './ProductCard'
 import Header from './Header'
 
-function ProductListingUser({ data }) {
+function UserProducts({ data }) {
     return (
         <div>
             <Header></Header>
@@ -20,4 +20,4 @@ function ProductListingUser({ data }) {
     )
 }
 
-export default ProductListingUser
+export default UserProducts
