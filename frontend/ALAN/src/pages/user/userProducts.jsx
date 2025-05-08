@@ -1,19 +1,32 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import ProductCard from '../../components/ProductCard'
+import Header from '../../components/Header'
 
-const UserProducts = () => {
-  const navigate = useNavigate();
+function UserProducts() {
+    const [products, setProducts] = useState([]);
 
-  const handleNavigate = (path) => {
-    navigate(path); 
-  };
+    useEffect(() => {
+        fetch('http://localhost:5000/api/products')
+            .then(res => res.json())
+            .then(data => setProducts(data))
+            .catch(err => console.error("Error fetching products:", err));
+    }, []);
 
-  return (
-    <div>
-      <h1>User Product Listings</h1>
-      <button onClick={() => handleNavigate('/orders')}>Go to Orders</button>
-    </div>
-  );
-};
+    return (
+        <div>
+            <Header />
+            <div className="flex flex-wrap gap-4 justify-center items-center">
+                {
+                    products.map((product) => (
+                        <ProductCard
+                            key={product._id}
+                            data={product}
+                        />
+                    ))
+                }
+            </div>
+        </div>
+    );
+}
 
 export default UserProducts;
