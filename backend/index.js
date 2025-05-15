@@ -6,6 +6,11 @@ import productRouter from './routes/productRouter.js';
 import transactionRouter from './routes/transactionRouter.js';
 import userRouter from './routes/userRouter.js';
 
+// TODO: 1) fix id not found stuff  
+// TODO: 2) change from getting id to just body
+// TODO: 3) implement sales report model
+// TODO: 4) crud for sales report validation
+
 dotenv.config();
 
 // NOTE: connect to express
@@ -49,4 +54,3 @@ app.get('/api', (req, res) => {
 app.use('/products', productRouter);
 app.use('/users', userRouter);
 app.use('/transactions', transactionRouter);
-
