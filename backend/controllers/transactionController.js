@@ -1,4 +1,5 @@
 import Transaction from '../models/Transaction.js';
+import Product from '../models/Product.js';
 import { ObjectId } from 'mongodb';
 
 // NOTE: POST
@@ -56,4 +57,3 @@ export const removeTransaction = async (req, res) => {
     res.status(500).json({error: "Document ID not valid!"});
   }
 };
-
