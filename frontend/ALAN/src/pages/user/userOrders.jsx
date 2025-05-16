@@ -1,22 +1,34 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import CartHeader from '../../components/CartHeader';
+import OrderCard from '../../components/OrderCard';
 
 const UserOrders = () => {
-  const navigate = useNavigate();
+  const [products, setProducts] = useState([]);
 
-  const handleNavigate = (path) => {
-    navigate(path); 
-  };
+  useEffect(() => {
+    fetch('http://localhost:5000/products/get-all-products')
+      .then(res => res.json())
+      .then(data => setProducts(data))
+      .catch(err => console.error("Error fetching products:", err));
+  }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-800 px-4">
-      <h1 className="text-4xl font-bold mb-8">User Orders</h1>
-      <button
-        onClick={() => handleNavigate('/products')}
-        className="px-6 py-2 border border-blue-500 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition"
-      >
-        Go to Products
-      </button>
+    <div className="bg-[#FEFAE0] min-h-screen">
+      <CartHeader data="Manage Orders" />
+
+      <div className="flex items-center justify-between h-18 m-4 p-4 bg-white rounded-[25px]">
+        <p className="font-serif w-1/6"> Product </p>
+        <p className="font-serif w-1/6"> Price </p>
+        <p className="font-serif w-1/6"> Qty </p>
+        <p className="font-serif w-1/6"> Total Price </p>
+        <p className="font-serif w-1/6"> Order Status </p>
+      </div>
+
+      <div>
+        {products.map((product) => (
+          <OrderCard key={product._id} data={product} />
+        ))}
+      </div>
     </div>
   );
 };
