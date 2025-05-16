@@ -27,7 +27,6 @@ function ProductHeader() {
                 <img src={menuImg} className="mx-5 h-10" />
             </button>
         </div>
-
     )
 }
 
