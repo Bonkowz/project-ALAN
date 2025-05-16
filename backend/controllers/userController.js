@@ -28,6 +28,16 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
+export const getAllCustomers = async (req, res) => {
+  try {
+    const users = await User.find({userType: "customer"});
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json({error: 'Failed to fetch users' });
+  }
+};
+
+
 // NOTE: PATCH
 export const updateUser = async (req, res) => {
   if (ObjectId.isValid(req.params.id)){
