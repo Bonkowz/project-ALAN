@@ -16,7 +16,7 @@ function UserCart() {
 
     return (
         <div className="bg-[#FEFAE0] min-h-screen">
-            <CartHeader></CartHeader>
+            <CartHeader data="Shopping Cart"></CartHeader>
 
             <div className="flex items-center justify-evenly h-18 m-4 p-4 bg-white rounded-[25px]">
                 <div className="flex items-center w-1/4 pr-4">

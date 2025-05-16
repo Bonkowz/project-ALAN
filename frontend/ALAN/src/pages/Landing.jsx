@@ -5,7 +5,7 @@ const Landing = () => {
   const navigate = useNavigate();
 
   const handleNavigate = (path) => {
-    navigate(path); 
+    navigate(path);
   };
 
   return (
