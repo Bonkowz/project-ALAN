@@ -24,7 +24,7 @@ function AdminOrderFulfillment() {
         const pendingOrders = transactions.filter(order => order.orderStatus === 0);
 
         const combined = pendingOrders.map(order => {
-          // Find product by _id (assuming product._id)
+          // Find product by _id 
           const product = products.find(p => p._id === order.productId);
           return {
             ...order,

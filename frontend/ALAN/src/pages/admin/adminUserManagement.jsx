@@ -1,24 +1,35 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import UserManagementCard from '../../components/UserManagementCard';
+import UserManagementHeader from '../../components/UserManagementHeader';
+import UserManagementLabel from '../../components/UserManagementLabel';
 
-const AdminUserManagement = () => {
-  const navigate = useNavigate();
+function AdminUserManagement() {
+  const [users, setUsers] = useState([]);
 
-  const handleNavigate = (path) => {
-    navigate(path); 
-  };
+  useEffect(() => {
+    fetch('http://localhost:5000/users/get-all-users')
+      .then(res => res.json())
+      .then(data => setUsers(data))
+      .catch(err => console.error("Error fetching users:", err));
+  }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-800 px-4">
-      <h1 className="text-4xl font-bold mb-8">Admin User Management</h1>
-      <button
-        onClick={() => handleNavigate('/admin/dashboard')}
-        className="px-6 py-2 border border-blue-500 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition"
-      >
-        Go to Dashboard
-      </button>
+    <div className="bg-[#FEFAE0] min-h-screen">
+      <UserManagementHeader />
+      <div className="flex flex-col justify-start px-6 pt-1 pb-3 gap-1 max-w-5xl mx-auto">
+
+        <h2 className="text-2xl text-left font-bold text-[#283618] mb-1">List of Active Users</h2>
+        <UserManagementLabel />
+
+        {/* User cards */}
+        <div className="flex flex-col divide-y divide-gray-200">
+          {users.map(user => (
+            <UserManagementCard key={user._id} data={user} />
+          ))}
+        </div>
+      </div>
     </div>
   );
-};
+}
 
 export default AdminUserManagement;
