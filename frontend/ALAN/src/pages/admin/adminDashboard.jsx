@@ -1,44 +1,101 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import DashboardHeader from '../../components/DashboardHeader';
+import circleStarImg from "../../assets/images/circlestar.png";
+import noteImg from "../../assets/images/note.png";
+import personImg from "../../assets/images/person.png";
+import calendarImg from "../../assets/images/calendar.png";
 
-const AdminDashboard = () => {
+function AdminDashboard() {
   const navigate = useNavigate();
 
   const handleNavigate = (path) => {
-    navigate(path); 
+    navigate(path);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-800 px-4">
-      <h1 className="text-4xl font-bold mb-8">Admin Dashboard</h1>
-      <div className="flex flex-col gap-4">
-        <button
-          onClick={() => handleNavigate('/admin/userManagement')}
-          className="px-6 py-2 border border-blue-500 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition"
-        >
-          Go to User Management
-        </button>
-        <button
+    <div className="bg-gray-100 min-h-screen">
+      <DashboardHeader />
+
+      {/* Greeting */}
+      <div className="text-left ml-4 mt-4">
+        <p className="text-4xl font-bold text-black">Hello, Admin</p>
+        <p className="text-lg font-semibold text-black">Have a Good Day!</p>
+      </div>
+
+      {/* Main Flex Layout */}
+      <div className="max-w-6xl mx-auto mt-10 flex gap-4 p-4 h-[60vh]">
+
+        {/* Left Section */}
+        <div className="flex flex-col w-1/2 gap-4">
+
+          {/* Order Fulfillment */}
+          <div
+            className="relative flex-1 bg-[#BC6C25] rounded-[25px] shadow-md cursor-pointer hover:bg-[#d89d61] transition"
+            onClick={() => handleNavigate('/admin/orderFulfillment')}
+          >
+            <div className="absolute top-2 right-4">
+              <p className="text-lg font-semibold text-[#FEFAE0]">Order Fulfillment</p>
+            </div>
+
+            <img
+              src={circleStarImg}
+              className="absolute bottom-2 left-4 w-18 h-18 rounded-full object-cover"
+            />
+          </div>
+
+          {/* Bottom Row */}
+          <div className="flex gap-4 h-1/2">
+
+            {/* Manage Users */}
+            <div
+              className="relative flex-1 bg-[#DDA15E] rounded-[25px] shadow-md cursor-pointer hover:bg-[#eeb66d] transition"
+              onClick={() => handleNavigate('/admin/userManagement')}
+            >
+              <div className="absolute top-2 right-4">
+                <p className="text-md font-semibold text-[#FEFAE0]">Manage Users</p>
+              </div>
+
+              <img
+                src={personImg}
+                className="absolute bottom-2 left-4 w-18 h-18 object-cover"
+              />
+            </div>
+
+            {/* Sales Reports */}
+            <div
+              className="relative flex-1 bg-[#606C38] rounded-[25px] shadow-md cursor-pointer hover:bg-[#7a8646] transition"
+              onClick={() => handleNavigate('/admin/sales')}
+            >
+              <div className="absolute top-2 right-4">
+                <p className="text-md font-semibold text-[#FEFAE0]">Sales Reports</p>
+              </div>
+
+              <img
+                src={calendarImg}
+                className="absolute bottom-2 left-4 w-18 h-18 object-cover"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Right Section */}
+        <div
+          className="relative w-1/2 bg-[#FEFAE0] rounded-[25px] shadow-md cursor-pointer hover:bg-[#fdf2c0] transition"
           onClick={() => handleNavigate('/admin/products')}
-          className="px-6 py-2 border border-blue-500 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition"
         >
-          Go to Products
-        </button>
-        <button
-          onClick={() => handleNavigate('/admin/orderFulfillment')}
-          className="px-6 py-2 border border-blue-500 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition"
-        >
-          Go to Order Fulfillment
-        </button>
-        <button
-          onClick={() => handleNavigate('/admin/sales')}
-          className="px-6 py-2 border border-blue-500 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition"
-        >
-          Go to Sales
-        </button>
+          <div className="absolute top-2 right-4">
+            <p className="text-2xl font-bold text-[#606C38]">Product Listing</p>
+          </div>
+
+          <img
+            src={noteImg}
+            className="absolute bottom-2 left-4 w-24 h-24 object-cover"
+          />
+        </div>
       </div>
     </div>
   );
-};
+}
 
 export default AdminDashboard;

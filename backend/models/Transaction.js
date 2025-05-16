@@ -1,13 +1,12 @@
 import mongoose from 'mongoose';
 
 const transactionSchema = new mongoose.Schema({
-  transactionId: String,
-  productId: String,
-  orderQty: Number,
-  orderStatus: Number,
-  email: String,
-  dateOrdered: String,
-  time: String
+  productId: {type: String, required: true },
+  orderQty: {type: Number, required: true },
+  orderStatus: {type: Number, required: true },
+  email: {type: String, required: true },
+  dateOrdered: {type: String, required: true },
+  time: {type: String, required: true }
 }, { collection: 'transaction' }); 
 
 export default mongoose.model('Transaction', transactionSchema);
