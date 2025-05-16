@@ -6,9 +6,6 @@ import productRouter from './routes/productRouter.js';
 import transactionRouter from './routes/transactionRouter.js';
 import userRouter from './routes/userRouter.js';
 
-// TODO: 3) implement sales report model
-// TODO: 4) crud for sales report validation
-
 dotenv.config();
 
 // NOTE: connect to express
@@ -49,6 +46,6 @@ app.get('/api', (req, res) => {
 });
 
 // NOTE: routes
-app.use('/products', productRouter);
-app.use('/users', userRouter);
-app.use('/transactions', transactionRouter);
+app.use('/product', productRouter);
+app.use('/user', userRouter);
+app.use('/transaction', transactionRouter);
