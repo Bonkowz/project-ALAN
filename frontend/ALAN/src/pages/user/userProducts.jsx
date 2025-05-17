@@ -12,6 +12,19 @@ function UserProducts() {
             .catch(err => console.error("Error fetching products:", err));
     }, []);
 
+    var cart = [];
+
+    function addToCart(name) {
+        const item = cart.find(item => item.name === name);
+        if (item) {
+            item.qty++;
+            console.log("Added another instance of " + name);
+        } else {
+            cart.push({ name: name, qty: 1 });
+            console.log("Item in cart: ", cart);
+        }
+    };
+
     return (
         <div>
             <ProductHeader />
@@ -21,6 +34,7 @@ function UserProducts() {
                         <ProductCard
                             key={product._id}
                             data={product}
+                            addToCart={addToCart}
                         />
                     ))
                 }

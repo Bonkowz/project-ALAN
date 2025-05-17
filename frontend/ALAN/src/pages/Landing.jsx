@@ -10,7 +10,7 @@ const Landing = () => {
   };
 
   return (
-    <div className="bg-[#FEFAE0] p-4">
+    <div className="bg-[#FEFAE0] min-h-screen flex flex-col items-center justify-center p-4 text-center">
       <div className="flex justify-between items-center w-[90%] max-w-4xl mx-auto">
         <p className="font-serif text-2xl shadow-2xl"> Project <i>ALAN</i></p>
 
@@ -23,10 +23,9 @@ const Landing = () => {
       </div>
 
       <center>
-        <img src={landingImg} className="rounded-[25px] w-[90%] max-w-4xl mx-auto object-cover" />
+        <img src={landingImg} className="rounded-[25px] max-w-4xl mx-auto object-cover" />
+        <p className="font-serif"> © COPYRIGHT 2025 </p>
       </center>
-
-      <p className="font-serif"> © COPYRIGHT 2025 </p>
     </div>
   );
 };

@@ -39,6 +39,12 @@ function UserCart() {
                 }
             </div>
 
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+
             <CartFooter></CartFooter>
         </div>
     )

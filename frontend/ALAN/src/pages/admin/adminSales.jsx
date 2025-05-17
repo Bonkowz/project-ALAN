@@ -35,7 +35,7 @@ function AdminSales() {
   return (
     <div className="bg-[#FEFAE0] min-h-screen">
       <SalesHeader />
-      
+
       <div className="flex flex-wrap gap-4 justify-center items-center p-4">
         <SalesLabel />
         {products.map(product => {
