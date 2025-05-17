@@ -1,11 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import landingImg from "../assets/images/landing.png";
 
 const Landing = () => {
   const navigate = useNavigate();
 
   const handleNavigate = (path) => {
-    navigate(path); 
+    navigate(path);
   };
 
   return (
@@ -20,6 +21,12 @@ const Landing = () => {
             onClick={() => handleNavigate('/signup')}> signup </button>
         </div>
       </div>
+
+      <center>
+        <img src={landingImg} className="rounded-[25px] w-[90%] max-w-4xl mx-auto object-cover" />
+      </center>
+
+      <p className="font-serif"> © COPYRIGHT 2025 </p>
     </div>
   );
 };

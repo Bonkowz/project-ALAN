@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import ProductCard from '../../components/ProductCard'
-import Header from '../../components/Header'
+import ProductHeader from '../../components/ProductHeader';
 
 function UserProducts() {
     const [products, setProducts] = useState([]);
@@ -14,7 +14,7 @@ function UserProducts() {
 
     return (
         <div>
-            <Header />
+            <ProductHeader />
             <div className="flex flex-wrap gap-4 justify-center items-center">
                 {
                     products.map((product) => (

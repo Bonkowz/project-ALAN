@@ -9,4 +9,3 @@ const productSchema = new mongoose.Schema({
 }, { collection: 'product' }); 
 
 export default mongoose.model('Product', productSchema);
-
