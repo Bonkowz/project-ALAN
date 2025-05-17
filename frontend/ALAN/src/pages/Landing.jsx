@@ -9,21 +9,16 @@ const Landing = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-800 px-4">
-      <h1 className="text-4xl font-bold mb-8">Landing Page</h1>
-      <div className="flex gap-4">
-        <button
-          onClick={() => handleNavigate('/signin')}
-          className="px-6 py-2 border border-blue-500 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition"
-        >
-          Sign In
-        </button>
-        <button
-          onClick={() => handleNavigate('/signup')}
-          className="px-6 py-2 border border-blue-500 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition"
-        >
-          Sign Up
-        </button>
+    <div className="bg-[#FEFAE0] p-4">
+      <div className="flex justify-between items-center w-[90%] max-w-4xl mx-auto">
+        <p className="font-serif text-2xl shadow-2xl"> Project <i>ALAN</i></p>
+
+        <div>
+          <button className="w-20 h-10 bg-[#606C38] text-[#FEFAE0] rounded-[25px] m-1"
+            onClick={() => handleNavigate('/signin')}> login </button>
+          <button className="w-20 h-10 bg-[#BC6C25] text-[#FEFAE0] rounded-[25px] m-1"
+            onClick={() => handleNavigate('/signup')}> signup </button>
+        </div>
       </div>
     </div>
   );

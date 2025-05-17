@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import productRouter from './routes/productRouter.js';
 import transactionRouter from './routes/transactionRouter.js';
 import userRouter from './routes/userRouter.js';
+import authRouter from './routes/authRouter.js';
 
 dotenv.config();
 
@@ -46,6 +47,7 @@ app.get('/api', (req, res) => {
 });
 
 // NOTE: routes
-app.use('/product', productRouter);
-app.use('/user', userRouter);
-app.use('/transaction', transactionRouter);
+app.use('/products', productRouter);
+app.use('/users', userRouter);
+app.use('/transactions', transactionRouter);
+app.use('/auth', authRouter);
