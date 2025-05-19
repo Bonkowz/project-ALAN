@@ -19,7 +19,7 @@ function ProductCard({ data, addToCart }) {
                     <p className="text-2xl font-serif font-bold"> PHP {data.productPrice} </p>
                 </div>
                 <button className="bg-[#606C38] rounded-[25px] text-white text-1xl w-full font-mono p-2 my-1" id="addToCartButton"
-                    onClick={() => addToCart(data.productName)}>
+                    onClick={() => addToCart(data._id)}>
                     ADD TO CART
                 </button>
             </div>

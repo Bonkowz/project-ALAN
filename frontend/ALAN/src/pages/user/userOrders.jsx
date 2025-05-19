@@ -3,12 +3,12 @@ import CartHeader from '../../components/CartHeader';
 import OrderCard from '../../components/OrderCard';
 
 const UserOrders = () => {
-  const [products, setProducts] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/products/get-all-products')
+    fetch('http://localhost:5000/transaction/get-all-transactions-cart')
       .then(res => res.json())
-      .then(data => setProducts(data))
+      .then(data => setCartItems(data))
       .catch(err => console.error("Error fetching products:", err));
   }, []);
 
@@ -25,8 +25,8 @@ const UserOrders = () => {
       </div>
 
       <div>
-        {products.map((product) => (
-          <OrderCard key={product._id} data={product} />
+        {cartItems.map((cartItem) => (
+          <OrderCard key={cartItem._id} data={cartItem} />
         ))}
       </div>
     </div>
