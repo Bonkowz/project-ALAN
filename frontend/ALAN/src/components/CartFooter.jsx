@@ -13,8 +13,8 @@ function CartFooter() {
 
             <div className="flex items-center justify-center">
                 <p className="font-serif text-2xl m-4"> Total: PHP 1.00 </p>
-                <button className="w-40 h-15 bg-[#BC6C25] text-[#FEFAE0] m-3 rounded-[10px]"> DELETE </button>
-                <button className="w-40 h-15 bg-[#606C38] text-[#FEFAE0] m-3 rounded-[10px]"> CHECK OUT </button>
+                <button className="w-40 h-15 bg-[#BC6C25] text-[#FEFAE0] m-3 rounded-[10px]" id="addToCartButton"> DELETE </button>
+                <button className="w-40 h-15 bg-[#606C38] text-[#FEFAE0] m-3 rounded-[10px]" id="addToCartButton"> CHECK OUT </button>
             </div>
         </div>
     )

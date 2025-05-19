@@ -4,11 +4,10 @@ import CartFooter from '../../components/CartFooter';
 import CartCard from '../../components/CartCard'
 
 function UserCart() {
-    // for demo purposes, i will be using the products currently in the database.
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/products/get-all-products')
+        fetch('http://localhost:5000/transaction/get-all-transactions-cart')
             .then(res => res.json())
             .then(data => setProducts(data))
             .catch(err => console.error("Error fetching products:", err));

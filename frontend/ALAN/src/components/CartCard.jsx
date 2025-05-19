@@ -1,25 +1,36 @@
-import React from 'react'
-import chickenBreastImg from "../assets/images/chicken_breast.jpg";
+import React, { useState, useEffect } from 'react';
 
 function CartCard({ data }) {
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost:5000/products/get-all-products')
+            .then(res => res.json())
+            .then(data => setProducts(data))
+            .catch(err => console.error("Error fetching products:", err));
+    }, []);
+
+    const product = products.find(p => p._id === data.productId);
+    if (!product) return <p>Loading product...</p>;
+
     return (
         <div className="flex items-center justify-evenly h-40 m-4 p-4 bg-white rounded-[25px]">
             <div className="flex items-center w-1/4 pr-4">
                 <input type="checkbox" className="size-5 mr-2" />
-                <img src={chickenBreastImg} className="h-32 rounded-[10px]" />
+                <img src={product.productImg} className="h-32 rounded-[10px]" />
 
                 <div className="ml-3">
-                    <p className="font-serif text-left"> {data.productName} </p>
-                    <p className="font-serif text-left"> {data.productType == 1 ? "crop" : "poultry"} </p>
-                    <p className="font-serif text-left"> {data.productDescription} </p>
+                    <p className="font-serif text-left"> {product.productName} </p>
+                    <p className="font-serif text-left"> {product.productType == 1 ? "crop" : "poultry"} </p>
+                    <p className="font-serif text-left"> {product.productDescription} </p>
                 </div>
             </div>
 
-            <p className="font-serif w-1/6"> PHP {data.productPrice} </p>
-            <p className="font-serif w-1/6"> {data.productQty} pcs </p>
-            <p className="font-serif text-[#BC6C25] w-1/6"> PHP {data.productPrice * data.productQty} </p>
+            <p className="font-serif w-1/6"> PHP {product.productPrice} </p>
+            <p className="font-serif w-1/6"> {data.orderQty} pcs </p>
+            <p className="font-serif text-[#BC6C25] w-1/6"> PHP {product.productPrice * data.orderQty} </p>
 
-            <button className="w-1/8 bg-[#BC6C25] text-[#FEFAE0] rounded-[25px]">
+            <button className="w-1/8 h-8 bg-[#BC6C25] text-[#FEFAE0] rounded-[25px]" id="addToCartButton">
                 DELETE
             </button>
         </div>

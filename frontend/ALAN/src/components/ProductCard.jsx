@@ -1,11 +1,10 @@
 import React from 'react'
-import chickenBreastImg from "../assets/images/chicken_breast.jpg";
 import '../index.css';
 
 function ProductCard({ data, addToCart }) {
     return (
         <div id="productCard" className="w-[400px] bg-[#FEFAE0] rounded-b-[25px] overflow-hidden m-4">
-            <img src={chickenBreastImg} className="w-full rounded-none" />
+            <img src={data.productImg} className="w-full rounded-none" />
             <div className="p-4">
                 <p className="text-4xl font-serif my-1 text-left font-bold"> {data.productName} </p>
 
