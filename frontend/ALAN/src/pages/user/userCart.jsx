@@ -75,6 +75,33 @@ function UserCart() {
         }
     }
 
+    // function for deleting selected items.
+    async function deleteSelectedItems() {
+        try {
+            const response = await Promise.all(
+                selected.map(id =>
+                    fetch('http://localhost:5000/transaction/remove-transaction', {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ id })
+                    })
+                )
+            );
+
+            const failed = response.filter(res => !res.ok);
+            if (failed.length > 0) {
+                console.error("Some deletions failed");
+            }
+
+            setCartItems(prev => prev.filter(item => !selected.includes(item._id)));
+            setSelected([]);
+        } catch (error) {
+            console.error('Network error:', error);
+        }
+    }
+
     return (
         <div className="bg-[#FEFAE0] min-h-screen">
             <CartHeader data="Shopping Cart"></CartHeader>
@@ -123,7 +150,8 @@ function UserCart() {
                         <p className="font-serif text-2xl text-right"> Total: ₱ {totalPrice} </p>
                         <p className="font-serif italic text-right"> Cash on Delivery </p>
                     </div>
-                    <button className="w-40 h-15 bg-[#BC6C25] text-[#FEFAE0] m-3 rounded-[10px]" id="addToCartButton"> DELETE </button>
+                    <button className="w-40 h-15 bg-[#BC6C25] text-[#FEFAE0] m-3 rounded-[10px]" id="addToCartButton"
+                        onClick={() => { deleteSelectedItems() }}> DELETE </button>
                     <button className="w-40 h-15 bg-[#606C38] text-[#FEFAE0] m-3 rounded-[10px]" id="addToCartButton"> CHECK OUT </button>
                 </div>
             </div>
