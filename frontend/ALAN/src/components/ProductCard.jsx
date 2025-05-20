@@ -15,7 +15,7 @@ function ProductCard({ data, addToCart }) {
 
                 <div className="flex justify-between items-center px-2">
                     <p className="text-2xl font-serif italic"> {data.productQty} in stock </p>
-                    <p className="text-2xl font-serif font-bold"> PHP {data.productPrice} </p>
+                    <p className="text-2xl font-serif font-bold"> ₱ {data.productPrice} </p>
                 </div>
                 <button className="bg-[#606C38] rounded-[25px] text-white text-1xl w-full font-mono p-2 my-1" id="addToCartButton"
                     onClick={() => addToCart(data._id)}>
