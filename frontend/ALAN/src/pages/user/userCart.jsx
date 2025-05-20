@@ -7,7 +7,17 @@ function UserCart() {
     const [selected, setSelected] = useState([]);
     const [totalItems, setTotalItems] = useState(0);
     const [totalPrice, setTotalPrice] = useState(0);
+    const [products, setProducts] = useState([]);
 
+    // get product items
+    useEffect(() => {
+        fetch('http://localhost:5000/products/get-all-products')
+            .then(res => res.json())
+            .then(data => setProducts(data))
+            .catch(err => console.error("Error fetching products:", err));
+    }, []);
+
+    // gets cart transactions
     useEffect(() => {
         fetch('http://localhost:5000/transaction/get-all-transactions-cart')
             .then(res => res.json())
@@ -27,9 +37,20 @@ function UserCart() {
     }, [cartItems]);
 
     // for the total price of selected items
+    // for the total price of selected items
     useEffect(() => {
+        const total = cartItems.reduce((acc, item) => {
+            if (selected.includes(item._id)) {
+                const product = products.find(p => p._id === item.productId);
+                if (product) {
+                    return acc + (product.productPrice * item.orderQty);
+                }
+            }
+            return acc;
+        }, 0);
 
-    }, [cartItems]);
+        setTotalPrice(total);
+    }, [selected, cartItems, products]);
 
     // for selecting an item
     function selectItem(productId) {
@@ -122,10 +143,7 @@ function UserCart() {
                 console.error("Some updates failed");
             }
 
-            // Remove checked out items from cartItems since they are no longer in cart
             setCartItems(prev => prev.filter(item => !selected.includes(item._id)));
-
-            // Clear selection
             setSelected([]);
         } catch (error) {
             console.error('Network error:', error);
