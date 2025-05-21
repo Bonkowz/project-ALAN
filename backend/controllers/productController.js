@@ -4,8 +4,8 @@ import { ObjectId } from 'mongodb';
 // NOTE: POST
 export const addProduct = async (req, res) => {
   try {
-    const { productName, productDescription, productType, productQty, productPrice } = req.body;
-    const newProduct = new Product({ productName, productDescription, productType, productQty, productPrice });
+    const {productName, productDescription, productType, productQty, productPrice} = req.body;
+    const newProduct = new Product({productName, productDescription, productType, productQty, productPrice});
     await newProduct.save();
     res.status(200).json({ message: "Product created successfully!" });
     return;
@@ -31,6 +31,17 @@ export const getAllProductsByQty = async (req, res) => {
   const products = await Product.find();
   try {
     res.status(200).json(products.sort(function (a, b) { return a.productQty - b.productQty }));
+    return;
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch products' });
+    return;
+  }
+};
+
+export const getAllProductsByQty = async (req, res) => {
+  const products = await Product.find();
+  try {
+    res.status(200).json(products.sort(function(a, b) {return a.productQty- b.productQty}));
     return;
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch products' });
