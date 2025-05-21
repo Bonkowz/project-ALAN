@@ -16,9 +16,9 @@ const Landing = () => {
 
         <div>
           <button className="w-20 h-10 bg-[#606C38] text-[#FEFAE0] rounded-[25px] m-1"
-            onClick={() => handleNavigate('/admin/dashboard')}> admin </button>
+            onClick={() => handleNavigate('/signin')}> login </button>
           <button className="w-20 h-10 bg-[#BC6C25] text-[#FEFAE0] rounded-[25px] m-1"
-            onClick={() => handleNavigate('/products')}> user </button>
+            onClick={() => handleNavigate('/signup')}> signup </button>
         </div>
       </div>
 

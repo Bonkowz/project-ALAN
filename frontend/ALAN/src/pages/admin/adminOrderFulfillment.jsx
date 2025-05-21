@@ -13,33 +13,31 @@ function AdminOrderFulfillment() {
   }, []);
 
   const fetchData = () => {
-    Promise.all([
-      fetch('http://localhost:5000/transactions/get-all-transactions').then(res => res.json()),
-      fetch('http://localhost:5000/products/get-all-products').then(res => res.json())
-    ])
-      .then(([transactions, products]) => {
-        setOrders(transactions);
-        setProducts(products);
+  Promise.all([
+    fetch('http://localhost:5000/transaction/get-all-transactions-pending').then(res => res.json()),
+    fetch('http://localhost:5000/product/get-all-products').then(res => res.json())
+  ])
+    .then(([transactions, products]) => {
+      setOrders(transactions);
+      setProducts(products);
+      console.log(transactions);
+      const combined = transactions.map(order => {
+        const product = products.find(p => p._id === order.productId);
+        return {
+          ...order,
+          productName: product?.productName || 'Unknown Product',
+          productType: product?.productType || 'No description',
+          productQty: product?.productQty || 0,
+          price: product?.productPrice || 0,
+          productId: product?._id
+        };
+      });
 
-        const pendingOrders = transactions.filter(order => order.orderStatus === 0);
+      setMergedOrders(combined);
+    })
+    .catch(err => console.error("Error fetching data:", err));
+};
 
-        const combined = pendingOrders.map(order => {
-          // Find product by _id 
-          const product = products.find(p => p._id === order.productId);
-          return {
-            ...order,
-            productName: product?.productName || 'Unknown Product',
-            productType: product?.productType || 'No description',
-            productQty: product?.productQty || 0,
-            price: product?.productPrice || 0,
-            productId: product?._id // keep productId updated with actual _id
-          };
-        });
-
-        setMergedOrders(combined);
-      })
-      .catch(err => console.error("Error fetching data:", err));
-  };
 
   const handleConfirm = async (transactionId, productId, orderQty, currentStock) => {
     try {
