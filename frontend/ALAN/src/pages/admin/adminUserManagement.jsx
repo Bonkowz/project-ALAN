@@ -7,7 +7,7 @@ function AdminUserManagement() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/users/get-all-users')
+    fetch('http://localhost:5000/user/get-all-users')
       .then(res => res.json())
       .then(data => setUsers(data))
       .catch(err => console.error("Error fetching users:", err));
