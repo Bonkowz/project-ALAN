@@ -1,5 +1,6 @@
 import Transaction from '../models/Transaction.js';
 import Product from '../models/Product.js';
+import mongoose from 'mongoose';
 import { ObjectId } from 'mongodb';
 
 // NOTE: POST
@@ -102,7 +103,56 @@ export const getAllTransactionsCart = async (req, res) => {
     return;
   }
 };
+// https://www.geeksforgeeks.org/mongoose-aggregate-aggregate-api/
+export const getFilteredTransactionsMerged = async (req, res) => {
+  try {
+    // Parse the orderStatus from the query parameters
+    const statusFilter = parseInt(req.query.orderStatus);
 
+    if (isNaN(statusFilter)) {
+      return res.status(400).json({ error: 'Invalid or missing orderStatus parameter' });
+    }
+
+    const transactions = await Transaction.aggregate([
+      {
+        $match: { orderStatus: statusFilter } // Filter by orderStatus
+      },
+      {
+        $lookup: {
+          from: 'product',
+          localField: 'productId',
+          foreignField: '_id',
+          as: 'productData'
+        }
+      },
+      {
+        $unwind: '$productData'
+      },
+      {
+        $project: {
+          _id: 1,
+          email: 1,
+          orderQty: 1,
+          orderStatus: 1,
+          dateOrdered: 1,
+          time: 1,
+          orderProductPrice: 1,
+
+          productId: '$productData._id',
+          productName: '$productData.productName',
+          productType: '$productData.productType',
+          productQty: '$productData.productQty',
+          productPrice: '$productData.productPrice',
+        }
+      }
+    ]);
+
+    res.status(200).json(transactions);
+  } catch (err) {
+    console.error('Aggregation error:', err);
+    res.status(500).json({ error: 'Failed to fetch merged transactions' });
+  }
+};
 
 
 
