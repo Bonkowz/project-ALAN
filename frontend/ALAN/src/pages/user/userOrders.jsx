@@ -6,11 +6,52 @@ const UserOrders = () => {
   const [orderItems, setOrderITems] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/transaction/get-all-transactions-pending')
-      .then(res => res.json())
-      .then(data => setOrderITems(data))
-      .catch(err => console.error("Error fetching products:", err));
+    async function fetchAllOrders() {
+      try {
+        const [pendingRes, canceledRes, completedRes] = await Promise.all([
+          fetch('http://localhost:5000/transaction/get-all-transactions-pending'),
+          fetch('http://localhost:5000/transaction/get-all-transactions-cancelled'),
+          fetch('http://localhost:5000/transaction/get-all-transactions-completed'),
+        ]);
+
+        const [pending, cancelled, completed] = await Promise.all([
+          pendingRes.json(),
+          canceledRes.json(),
+          completedRes.json(),
+        ]);
+
+        const allOrders = [...pending, ...cancelled, ...completed];
+        setOrderITems(allOrders);
+
+      } catch (err) {
+        console.error("Error fetching transactions:", err);
+      }
+    }
+
+    fetchAllOrders();
   }, []);
+
+  async function cancelOrder(id) {
+    try {
+      const response = await fetch('http://localhost:5000/transaction/update-transaction', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, orderStatus: 2 }),
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        console.log(result.message);
+        setOrderITems(prevItems => prevItems.filter(item => item._id !== id));
+      } else {
+        console.error('Error:', result.error);
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+    }
+  }
 
   return (
     <div className="bg-[#FEFAE0] min-h-screen">
@@ -26,7 +67,7 @@ const UserOrders = () => {
 
       <div>
         {orderItems.map((cartItem) => (
-          <OrderCard key={cartItem._id} data={cartItem} />
+          <OrderCard key={cartItem._id} data={cartItem} cancelOrder={cancelOrder} />
         ))}
       </div>
 

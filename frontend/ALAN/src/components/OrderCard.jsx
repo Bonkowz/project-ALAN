@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-function OrderCard({ data }) {
+function OrderCard({ data, cancelOrder }) {
     const [products, setProducts] = useState([]);
+    var toDisplay;
 
     useEffect(() => {
         fetch('http://localhost:5000/products/get-all-products')
@@ -12,6 +13,28 @@ function OrderCard({ data }) {
 
     const product = products.find(p => p._id === data.productId);
     if (!product) return <p>Loading product...</p>;
+
+    switch (data.orderStatus) {
+        case 0:
+            toDisplay = <>
+                <p className="font-serif text-center text-[#BC6C25]"> Pending <br /> Confirmation </p>
+                <button className="w-26 h-8 bg-[#BC6C25] text-[#FEFAE0] rounded-[25px]" id="addToCartButton"
+                    onClick={() => cancelOrder(data._id)}>
+                    CANCEL
+                </button>
+            </>
+            break;
+        case 1:
+            toDisplay = <>
+                <p className="font-serif text-center text-[#606C38]"> Completed </p>
+            </>
+            break;
+        case 2:
+            toDisplay = <>
+                <p className="font-serif text-center text-[#BC6C25]"> Cancelled </p>
+            </>
+            break;r
+    }
 
     return (
         <div className="flex items-center justify-evenly h-40 m-4 p-4 bg-white rounded-[25px]">
@@ -29,10 +52,7 @@ function OrderCard({ data }) {
             <p className="font-serif text-[#BC6C25] w-1/6"> PHP {product.productPrice * data.orderQty} </p>
 
             <div className="flex flex-col items-center">
-                <p className="font-serif text-center text-[#BC6C25]"> Pending <br /> Confirmation </p>
-                <button className="w-26 h-8 bg-[#BC6C25] text-[#FEFAE0] rounded-[25px]" id="addToCartButton">
-                    CANCEL
-                </button>
+                {toDisplay}
             </div>
         </div>
     )
