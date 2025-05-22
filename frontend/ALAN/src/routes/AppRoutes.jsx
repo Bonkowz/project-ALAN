@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { UserContextProvider } from '../context/userContext';
+import ProtectedRoute from '../utils/ProtectedRoute'; 
 
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
@@ -20,30 +22,34 @@ import Landing from '../pages/Landing';
 // TODO: add isUserSignedIn to relevant paths
 
 const AppRoutes = () => {
-  const isUserSignedIn = !!localStorage.getItem('token');
-  
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Public routes */}
-        <Route path="/" element={<Landing />} />
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/signup" element={<Signup />} />
+    <UserContextProvider>
+      <BrowserRouter>
+        <Routes>
+           {/* Public routes */}
+            <Route path="/" element={<Landing />} />
+            <Route path="/signin" element={<Signin />} />
+            <Route path="/signup" element={<Signup />} />
 
-        {/* User routes */}
-        <Route path="/products" element={<UserProducts />} />
-        <Route path="/cart" element={<UserCart />} />
-        <Route path="/orders" element={<UserOrders />} />
+          {/* User routes */}
+          <Route element={<ProtectedRoute allowedRoles={['customer']} />}>
+            <Route path="/products" element={<UserProducts />} />
+            <Route path="/cart" element={<UserCart />} />
+            <Route path="/orders" element={<UserOrders />} />
+          </Route>
 
-        {/* Admin routes */}
-        {isUserSignedIn && <Route path="/admin/dashboard" element={<AdminDashboard />} />}
-        <Route path="/admin/userManagement" element={<AdminUserManagement />} />
-        <Route path="/admin/products" element={<AdminProducts />} />
-        <Route path="/admin/orderFulfillment" element={<AdminOrderFulfillment />} />
-        <Route path="/admin/sales" element={<AdminSales />} />
-      </Routes>
-    </BrowserRouter>
-  );
+          {/* Admin routes */}
+          <Route element={<ProtectedRoute allowedRoles={['administrator']} />}>
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/userManagement" element={<AdminUserManagement />} />
+            <Route path="/admin/products" element={<AdminProducts />} />
+            <Route path="/admin/orderFulfillment" element={<AdminOrderFulfillment />} />
+            <Route path="/admin/sales" element={<AdminSales />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </UserContextProvider>
+  )
 };
 
 export default AppRoutes;

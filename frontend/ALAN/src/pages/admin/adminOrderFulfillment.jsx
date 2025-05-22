@@ -11,33 +11,6 @@ function AdminOrderFulfillment() {
   }, []);
 
   const fetchData = () => {
-<<<<<<< HEAD
-  Promise.all([
-    fetch('http://localhost:5000/transaction/get-all-transactions-pending').then(res => res.json()),
-    fetch('http://localhost:5000/product/get-all-products').then(res => res.json())
-  ])
-    .then(([transactions, products]) => {
-      setOrders(transactions);
-      setProducts(products);
-      console.log(transactions);
-      const combined = transactions.map(order => {
-        const product = products.find(p => p._id === order.productId);
-        return {
-          ...order,
-          productName: product?.productName || 'Unknown Product',
-          productType: product?.productType || 'No description',
-          productQty: product?.productQty || 0,
-          price: product?.productPrice || 0,
-          productId: product?._id
-        };
-      });
-
-      setMergedOrders(combined);
-    })
-    .catch(err => console.error("Error fetching data:", err));
-};
-
-=======
     fetch('http://localhost:5000/transaction/get-filtered-transactions-merged?orderStatus=0')
       .then(res => res.json())
       .then(data => {
@@ -47,7 +20,6 @@ function AdminOrderFulfillment() {
       .catch(err => console.error("Error fetching merged orders:", err));
 
   };
->>>>>>> main
 
   console.log(mergedOrders)
   const handleConfirm = async (transactionId, productId, orderQty, currentStock) => {

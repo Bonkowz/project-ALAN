@@ -1,6 +1,7 @@
-  import {useState, useEffect} from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { UserContext } from '../context/userContext';
 // Assuming you have an image for the sign-in page header, replace with actual path
 // import signInHeaderImg from "../assets/images/signin-header.png";
 
@@ -10,43 +11,52 @@ import axios from 'axios';
 // TODO: make successful login not a alert
 // TODO: add signout stuff
 
+
 const Signin = () => {
-  const navigate = useNavigate();
+  const { user, loading } = useContext(UserContext);
+  const navigate = useNavigate()
 
   const handleNavigate = (path) => {
     navigate(path);
   };
 
   const [users, setUsers] = useState([]);
-  const [email, setEmail] = useState(''); 
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   useEffect(() => {
     fetchUsers();
-  }, [])
+  }, []);
 
   const fetchUsers = () => {
-      axios
+    axios
       .get('http://localhost:5000/user/get-all-customers')
       .then((res) => {
         console.log(res.data)
       });
   }
-  
+
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-        const response = await axios.post('http://localhost:5000/auth/login', {email, password})
-        const token = response.data.token
-        alert('Login successful')
-        setEmail('')
-        setPassword('')
-        fetchUsers();
-        navigate('/admin/dashboard')
-        window.location.reload();
-        localStorage.setItem('token', token)
+      const response = await axios.post('http://localhost:5000/auth/login', { email, password })
+      const token = response.data.token
+      const loggedInUserType = response.data.userType ;
+      // alert('Login successful')
+      setEmail('')
+      setPassword('')
+      fetchUsers();
+      localStorage.setItem('token', token)
+      if (loggedInUserType === 'administrator') {
+        navigate('/admin/dashboard');
+      } else if (loggedInUserType === 'customer') {
+        navigate('/products'); 
+      } else {
+        navigate('/'); 
+      }
+      // window.location.reload();
     } catch (error) {
-        console.log('Login Error', error)
+      console.log('Login Error', error)
     }
   }
 
@@ -59,8 +69,8 @@ const Signin = () => {
         {/* If using an image file: <img src={signInHeaderImg} alt="Project ALAN" className="rounded-[25px] w-full object-cover mb-6"/> */}
         {/* Placeholder div with background color and rounded corners */}
         <div className="bg-[#DDA15E] h-32 rounded-[25px] mb-6 flex items-center justify-center">
-            {/* You can add text or an icon here if needed */}
-             <p className="text-[#FEFAE0] text-2xl font-serif">Project <i>ALAN</i></p>
+          {/* You can add text or an icon here if needed */}
+          <p className="text-[#FEFAE0] text-2xl font-serif">Project <i>ALAN</i></p>
         </div>
 
 
@@ -75,7 +85,7 @@ const Signin = () => {
               placeholder="enter email"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#606C38] bg-gray-200"
               value={email}
-              onChange= {(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
@@ -86,7 +96,7 @@ const Signin = () => {
               placeholder="enter password"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#606C38] bg-gray-200"
               value={password}
-              onChange= {(e) => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
