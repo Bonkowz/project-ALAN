@@ -16,15 +16,21 @@ function AdminOrderFulfillment() {
       .then(data => {
         setMergedOrders(data);
       })
-      
+
       .catch(err => console.error("Error fetching merged orders:", err));
 
   };
 
-  console.log(mergedOrders)
   const handleConfirm = async (transactionId, productId, orderQty, currentStock) => {
+    // Check if requested quantity exceeds stock
+    if (orderQty > currentStock) {
+      alert("Error: Ordered quantity exceeds current stock.");
+      return;
+    }
+
     try {
       console.log('Updating transaction:', transactionId);
+
       // 1. Update transaction status
       await fetch(`http://localhost:5000/transaction/update-transaction/${transactionId}`, {
         method: 'PATCH',
@@ -48,8 +54,10 @@ function AdminOrderFulfillment() {
       setMergedOrders(prev => prev.filter(order => order._id !== transactionId));
     } catch (err) {
       console.error("Error confirming order:", err);
+      alert("An error occurred while confirming the order. Please try again.");
     }
   };
+
 
   return (
     <div className="bg-[#FEFAE0] min-h-screen">
