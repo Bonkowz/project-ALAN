@@ -36,7 +36,7 @@ export const getAllProductsByQty = async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch products' });
     return;
   }
-}
+};
 
 export const getAllProductsByPrice = async (req, res) => {
   const products = await Product.find();
@@ -57,6 +57,20 @@ export const getAllProductsByTotal = async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch products' });
     return;
+  }
+};
+
+// For sorting with ascending and descending order in mind
+export const getAllProductsSorted = async (req, res) => {
+  const { sortBy = 'productName', order = 'asc' } = req.query;
+
+  const sortOrder = order === 'desc' ? -1 : 1;
+
+  try {
+    const products = await Product.find().sort({ [sortBy]: sortOrder });
+    res.status(200).json(products);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch sorted products' });
   }
 };
 

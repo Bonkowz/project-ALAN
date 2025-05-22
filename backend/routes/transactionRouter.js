@@ -8,6 +8,7 @@ import {
     getAllTransactionsCart,
     updateTransaction, 
     removeTransaction, 
+    getFilteredTransactionsMerged,
 } from '../controllers/transactionController.js';
 
 const transactionRouter = express.Router();
@@ -18,6 +19,7 @@ transactionRouter.get('/get-all-transactions-pending', getAllTransactionsPending
 transactionRouter.get('/get-all-transactions-completed', getAllTransactionsCompleted);
 transactionRouter.get('/get-all-transactions-cancelled', getAllTransactionsCancelled);
 transactionRouter.get('/get-all-transactions-cart', getAllTransactionsCart);
+transactionRouter.get('/get-filtered-transactions-merged', getFilteredTransactionsMerged);
 transactionRouter.patch('/update-transaction', updateTransaction);
 transactionRouter.delete('/remove-transaction', removeTransaction);
 

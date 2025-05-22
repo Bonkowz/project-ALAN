@@ -44,7 +44,11 @@ const UserOrders = () => {
       const result = await response.json();
       if (response.ok) {
         console.log(result.message);
-        setOrderITems(prevItems => prevItems.filter(item => item._id !== id));
+        setOrderITems(prevItems =>
+          prevItems.map(item =>
+            item._id === id ? { ...item, orderStatus: 2 } : item
+          )
+        );
       } else {
         console.error('Error:', result.error);
       }
