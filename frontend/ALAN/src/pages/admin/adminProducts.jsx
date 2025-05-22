@@ -1,24 +1,101 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import AdminProductCard from '../../components/AdminProductCard';
+import AdminProductHeader from '../../components/AdminProductHeader';
+import AdminProductDropDown from '../../components/AdminProductDropDown';
+import AdminProductsEdit from '../../components/AdminProductsEdit';
 
-const AdminProducts = () => {
-  const navigate = useNavigate();
+function AdminProducts() {
+  const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isEditModalOpen, setisEditModalOpen] = useState(false);
+  const [updatedQty, setUpdatedQty] = useState('');
+  const [updatedPrice, setUpdatedPrice] = useState('');
+  const [sortChoice, setSortChoice] = useState('productName');
+  const [sortOrder, setSortOrder] = useState('asc');
 
-  const handleNavigate = (path) => {
-    navigate(path); 
+  useEffect(() => {
+    fetchProducts();
+  }, [sortChoice, sortOrder]);
+
+  // Fetch products with the current sorting configuration
+  const fetchProducts = () => {
+    const endpoint = `http://localhost:5000/product/get-all-products-sorted?sortBy=${sortChoice}&order=${sortOrder}`;
+
+    fetch(endpoint)
+      .then(res => res.json())
+      .then(data => setProducts(data))
+      .catch(err => console.error("Error fetching products:", err));
+  };
+
+  const openModal = (product) => {
+    setSelectedProduct(product);
+    setUpdatedQty(product.productQty);
+    setUpdatedPrice(product.productPrice);
+    setisEditModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedProduct(null);
+    setisEditModalOpen(false);
+  };
+
+  const handleSave = async () => {
+    try {
+      await fetch('http://localhost:5000/product/update-product', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: selectedProduct._id,
+          productQty: updatedQty,
+          productPrice: updatedPrice
+        }),
+      });
+
+      closeModal();
+      fetchProducts();
+    } catch (err) {
+      console.error("Error updating product:", err);
+    }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-800 px-4">
-      <h1 className="text-4xl font-bold mb-8">Admin Products</h1>
-      <button
-        onClick={() => handleNavigate('/admin/dashboard')}
-        className="px-6 py-2 border border-blue-500 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition"
-      >
-        Go to Dashboard
-      </button>
+    <div>
+      <AdminProductHeader />
+      <div className="flex justify-end px-6 mt-2">
+        <AdminProductDropDown
+          selected={sortChoice}
+          onSelect={setSortChoice}
+          sortOrder={sortOrder}
+          onToggleOrder={() => setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'))}
+        />
+      </div>
+
+
+      <div className="flex flex-wrap gap-4 justify-center items-center mt-4">
+        {products.map((product) => (
+          <AdminProductCard
+            key={product._id}
+            data={product}
+            onEdit={() => openModal(product)}
+          />
+        ))}
+      </div>
+
+      {isEditModalOpen && (
+        <AdminProductsEdit
+          product={selectedProduct}
+          updatedQty={updatedQty}
+          updatedPrice={updatedPrice}
+          onQtyChange={setUpdatedQty}
+          onPriceChange={setUpdatedPrice}
+          onCancel={closeModal}
+          onSave={handleSave}
+        />
+      )}
     </div>
   );
-};
+}
 
 export default AdminProducts;

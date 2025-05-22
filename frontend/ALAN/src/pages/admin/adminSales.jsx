@@ -14,8 +14,8 @@ function AdminSales() {
 
   const fetchData = () => {
     Promise.all([
-      fetch('http://localhost:5000/products/get-all-products').then(res => res.json()),
-      fetch('http://localhost:5000/transactions/get-all-transactions').then(res => res.json())
+      fetch('http://localhost:5000/product/get-all-products').then(res => res.json()),
+      fetch('http://localhost:5000/transaction/get-all-transactions').then(res => res.json())
     ])
       .then(([productsData, transactionsData]) => {
         setProducts(productsData);
