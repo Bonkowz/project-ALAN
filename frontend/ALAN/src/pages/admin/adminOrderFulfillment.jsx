@@ -4,8 +4,6 @@ import OrderFulfillmentHeader from '../../components/OrderFulfillmentHeader';
 import OrderFulfillmentLabel from '../../components/OrderFulfillmentLabel';
 
 function AdminOrderFulfillment() {
-  const [orders, setOrders] = useState([]);
-  const [products, setProducts] = useState([]);
   const [mergedOrders, setMergedOrders] = useState([]);
 
   useEffect(() => {
@@ -13,6 +11,7 @@ function AdminOrderFulfillment() {
   }, []);
 
   const fetchData = () => {
+<<<<<<< HEAD
   Promise.all([
     fetch('http://localhost:5000/transaction/get-all-transactions-pending').then(res => res.json()),
     fetch('http://localhost:5000/product/get-all-products').then(res => res.json())
@@ -38,12 +37,24 @@ function AdminOrderFulfillment() {
     .catch(err => console.error("Error fetching data:", err));
 };
 
+=======
+    fetch('http://localhost:5000/transaction/get-filtered-transactions-merged?orderStatus=0')
+      .then(res => res.json())
+      .then(data => {
+        setMergedOrders(data);
+      })
+      
+      .catch(err => console.error("Error fetching merged orders:", err));
 
+  };
+>>>>>>> main
+
+  console.log(mergedOrders)
   const handleConfirm = async (transactionId, productId, orderQty, currentStock) => {
     try {
       console.log('Updating transaction:', transactionId);
       // 1. Update transaction status
-      await fetch(`http://localhost:5000/transactions/update-transaction/${transactionId}`, {
+      await fetch(`http://localhost:5000/transaction/update-transaction/${transactionId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -53,7 +64,7 @@ function AdminOrderFulfillment() {
 
       // 2. Update product stock
       const updatedStock = currentStock - orderQty;
-      await fetch(`http://localhost:5000/products/update-product/${productId}`, {
+      await fetch(`http://localhost:5000/product/update-product/${productId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
