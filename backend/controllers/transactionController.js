@@ -4,26 +4,47 @@ import { ObjectId } from 'mongodb';
 
 // NOTE: POST
 export const addTransaction = async (req, res) => {
-  if (!ObjectId.isValid(req.body.productId)){
-    res.status(500).json({error: "Document ID not valid!"});
-    return; 
+  if (!ObjectId.isValid(req.body.productId)) {
+    res.status(500).json({ error: "Document ID not valid!" });
+    return;
   }
-  if (!await Product.findOne({_id: Object(req.body.productId)})){ //TODO: not working wtf
-      res.status(500).json({ error: 'Product does not exist!' });
-      return;
-    }
-    try {
-    const productId = req.body.productId; //TODO: make this into a object
-    const {orderQty, orderStatus, email, dateOrdered, time} = req.body;
-    const newTransaction = new Transaction({productId, orderQty, orderStatus, email, dateOrdered, time});
+
+  const product = await Product.findById(req.body.productId);
+  if (!product) {
+    res.status(500).json({ error: 'Product does not exist!' });
+    return;
+  }
+
+  try {
+    const {
+      productId,
+      orderQty,
+      orderStatus,
+      email,
+      dateOrdered,
+      time
+    } = req.body;
+
+    // Use the product's current price 
+    const orderProductPrice = product.productPrice;
+
+    const newTransaction = new Transaction({
+      productId,
+      orderProductPrice,
+      orderQty,
+      orderStatus,
+      email,
+      dateOrdered,
+      time
+    });
+
     await newTransaction.save();
-    res.status(200).json({message:"Transaction created successfully!"});
-    return; 
+    res.status(200).json({ message: "Transaction created successfully!" });
   } catch (err) {
-    res.status(500).json({error: "Error adding transaction!"});
-    return; 
+    console.error(err);
+    res.status(500).json({ error: "Error adding transaction!" });
   }
-}
+};
 
 // NOTE: GET
 // NOTE: (Int: 0 Pending / 1 Completed / 2 Canceled / 3 Cart)
@@ -31,54 +52,54 @@ export const getAllTransactions = async (req, res) => {
   const transactions = await Transaction.find();
   try {
     res.status(200).json(transactions);
-    return; 
+    return;
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch transactions' });
-    return; 
+    return;
   }
 };
 
 export const getAllTransactionsPending = async (req, res) => {
-  const transactions = await Transaction.find({orderStatus: 0});
+  const transactions = await Transaction.find({ orderStatus: 0 });
   try {
     res.status(200).json(transactions);
-    return; 
+    return;
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch transactions' });
-    return; 
+    return;
   }
 };
 
 export const getAllTransactionsCompleted = async (req, res) => {
-  const transactions = await Transaction.find({orderStatus: 1});
+  const transactions = await Transaction.find({ orderStatus: 1 });
   try {
     res.status(200).json(transactions);
-    return; 
+    return;
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch transactions' });
-    return; 
+    return;
   }
 };
 
 export const getAllTransactionsCancelled = async (req, res) => {
-  const transactions = await Transaction.find({orderStatus: 2});
+  const transactions = await Transaction.find({ orderStatus: 2 });
   try {
     res.status(200).json(transactions);
-    return; 
+    return;
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch transactions' });
-    return; 
+    return;
   }
 };
 
 export const getAllTransactionsCart = async (req, res) => {
-  const transactions = await Transaction.find({orderStatus: 3});
+  const transactions = await Transaction.find({ orderStatus: 3 });
   try {
     res.status(200).json(transactions);
-    return; 
+    return;
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch transactions' });
-    return; 
+    return;
   }
 };
 
@@ -88,37 +109,37 @@ export const getAllTransactionsCart = async (req, res) => {
 // NOTE: PUT
 export const updateTransaction = async (req, res) => {
   const newTransaction = req.body;
-  if (!ObjectId.isValid(req.body.id)){
-    res.status(500).json({error: "Document ID not valid!"});
-    return; 
+  if (!ObjectId.isValid(req.body.id)) {
+    res.status(500).json({ error: "Document ID not valid!" });
+    return;
   }
-  if (!await Transaction.findOne({_id: Object(req.body.id)})){
+  if (!await Transaction.findOne({ _id: Object(req.body.id) })) {
     res.status(500).json({ error: 'Transaction does not exist!' });
     return;
   }
   try {
-    await Transaction.updateOne({_id: Object(req.body.id)}, {$set: newTransaction});
-    res.status(200).json({message: "Updated transaction!"});
-    return; 
+    await Transaction.updateOne({ _id: Object(req.body.id) }, { $set: newTransaction });
+    res.status(200).json({ message: "Updated transaction!" });
+    return;
   } catch (err) {
     res.status(500).json({ error: 'Failed to update transaction' });
-    return; 
+    return;
   }
 };
 
 // NOTE: DELETE
 export const removeTransaction = async (req, res) => {
-  if (!ObjectId.isValid(req.body.id)){
-    res.status(500).json({error: "Document ID not valid!"});
+  if (!ObjectId.isValid(req.body.id)) {
+    res.status(500).json({ error: "Document ID not valid!" });
     return;
   }
-  if (!await Transaction.findOne({_id: Object(req.body.id)})){
+  if (!await Transaction.findOne({ _id: Object(req.body.id) })) {
     res.status(500).json({ error: 'Transaction does not exist!' });
     return;
   }
   try {
-    await Transaction.deleteOne({_id: Object(req.body.id)});
-    res.status(200).json({ message: "Deleted transaction!"});
+    await Transaction.deleteOne({ _id: Object(req.body.id) });
+    res.status(200).json({ message: "Deleted transaction!" });
     return;
   } catch (err) {
     res.status(500).json({ error: 'Failed to delete transaction' });

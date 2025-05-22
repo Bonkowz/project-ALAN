@@ -38,17 +38,6 @@ export const getAllProductsByQty = async (req, res) => {
   }
 };
 
-export const getAllProductsByQty = async (req, res) => {
-  const products = await Product.find();
-  try {
-    res.status(200).json(products.sort(function(a, b) {return a.productQty- b.productQty}));
-    return;
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch products' });
-    return;
-  }
-}
-
 export const getAllProductsByPrice = async (req, res) => {
   const products = await Product.find();
   try {
