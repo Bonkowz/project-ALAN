@@ -8,7 +8,7 @@ export const addTransaction = async (req, res) => {
     res.status(500).json({error: "Document ID not valid!"});
     return; 
   }
-  if (!await Product.findOne({_id: Object(req.body.productId)})){ //TODO: not working wtf
+  if (!await Product.findOne({_id: Object(req.body.productId)})){ 
       res.status(500).json({ error: 'Product does not exist!' });
       return;
     }
