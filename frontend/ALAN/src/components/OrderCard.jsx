@@ -29,8 +29,8 @@ function OrderCard({ data }) {
             <p className="font-serif text-[#BC6C25] w-1/6"> PHP {product.productPrice * data.orderQty} </p>
 
             <div className="flex flex-col items-center">
-                <p className="font-serif text-[#BC6C25]"> Pending Confirmation </p>
-                <button className="w-26 bg-[#BC6C25] text-[#FEFAE0] rounded-[25px]" id="addToCartButton">
+                <p className="font-serif text-center text-[#BC6C25]"> Pending <br /> Confirmation </p>
+                <button className="w-26 h-8 bg-[#BC6C25] text-[#FEFAE0] rounded-[25px]" id="addToCartButton">
                     CANCEL
                 </button>
             </div>
