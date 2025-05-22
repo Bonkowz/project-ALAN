@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/CMSC-100-2S-AY2024-2025/project-agriculture-livestock-assets-network#readme",
   "dependencies": {
+    "axios": "^1.9.0",
     "bcrypt": "^6.0.0",
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
