@@ -144,6 +144,42 @@ function UserCart() {
         }
     }
 
+    function increaseOrder(id) {
+        setMergedOrders(prev =>
+            prev.map(order =>
+                order._id === id
+                    ? { ...order, orderQty: order.orderQty + 1 }
+                    : order
+            )
+        );
+
+        fetch('http://localhost:5000/transaction/update-transaction', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id, orderQty: mergedOrders.find(o => o._id === id).orderQty + 1 }),
+        }).catch(console.error);
+    }
+
+    function decreaseOrder(id) {
+        setMergedOrders(prev =>
+            prev.map(order =>
+                order._id === id && order.orderQty > 1
+                    ? { ...order, orderQty: order.orderQty - 1 }
+                    : order
+            )
+        );
+
+        const order = mergedOrders.find(o => o._id === id);
+        if (order.orderQty > 1) {
+            fetch('http://localhost:5000/transaction/update-transaction', {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, orderQty: order.orderQty - 1 }),
+            }).catch(console.error);
+        }
+    }
+
+
     return (
         <div className="bg-[#FEFAE0] min-h-screen">
             <CartHeader data="Shopping Cart"></CartHeader>
@@ -167,6 +203,8 @@ function UserCart() {
                             isSelected={selected.includes(product._id)}
                             onToggleSelect={() => selectItem(product._id)}
                             deleteItem={deleteItem}
+                            increaseOrder={increaseOrder}
+                            decreaseOrder={decreaseOrder}
                         />
                     ))
                 }
