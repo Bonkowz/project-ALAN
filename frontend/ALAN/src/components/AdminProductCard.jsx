@@ -5,7 +5,7 @@ import '../index.css';
 function AdminProductCard({ data, onEdit }) {
     return (
         <div
-            id="productCard"
+            id="adminProductCard"
             className="w-[220px] bg-[#FEFAE0] rounded-b-[16px] overflow-hidden m-2 shadow-sm"
         >
             <img src={chickenBreastImg} className="w-full h-[120px] object-cover" />
