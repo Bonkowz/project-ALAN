@@ -26,14 +26,14 @@ function OrderCard({ data, cancelOrder }) {
             break;
         case 1:
             toDisplay = <>
-                <p className="font-serif text-center text-[#606C38]"> Completed </p>
+                <p className="font-serif text-center text-[#606C38]"> Confirmed by <br /> Merchant </p>
             </>
             break;
         case 2:
             toDisplay = <>
                 <p className="font-serif text-center text-[#BC6C25]"> Cancelled </p>
             </>
-            break;r
+            break; r
     }
 
     return (
