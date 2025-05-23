@@ -1,0 +1,36 @@
+import axios from 'axios';
+import {createContext, useState, useEffect} from 'react';
+
+export const UserContext = createContext({});
+
+export function UserContextProvider({children}) {
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (user === null && loading === true) {
+            axios.get('/auth/profile')
+                .then(({data}) => {
+                    if (data && Object.keys(data).length > 0) {
+                        setUser(data);
+                    } else {
+                        setUser(null);
+                    }
+                })
+                .catch(error => {
+                    setUser(null);
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
+        } else if (user !== null && loading === true) {
+            setLoading(false);
+        }
+    }, []);
+
+    return (
+        <UserContext.Provider value = {{user, setUser, loading}}>
+            {children}
+        </UserContext.Provider>
+    )
+}

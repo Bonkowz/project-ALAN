@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardHeader from '../../components/DashboardHeader';
 import circleStarImg from "../../assets/images/circlestar.png";
 import noteImg from "../../assets/images/note.png";
 import personImg from "../../assets/images/person.png";
 import calendarImg from "../../assets/images/calendar.png";
+import { UserContext } from '../../context/userContext';
 
 function AdminDashboard() {
   const navigate = useNavigate();
@@ -13,13 +14,15 @@ function AdminDashboard() {
     navigate(path);
   };
 
+  const {user} = useContext(UserContext);
+
   return (
     <div className="bg-gray-100 min-h-screen">
       <DashboardHeader />
 
       {/* Greeting */}
       <div className="text-left ml-4 mt-4">
-        <p className="text-4xl font-bold text-black">Hello, Admin</p>
+        <p className="text-4xl font-bold text-black">Hello, Admin {user.firstName}</p>
         <p className="text-lg font-semibold text-black">Have a Good Day!</p>
       </div>
 
