@@ -26,8 +26,8 @@ function OrderCard({ data, cancelOrder }) {
 
     return (
         <div className="flex items-center justify-evenly h-40 m-4 p-4 bg-white rounded-[25px]">
-            <div className="flex items-center w-1/6 pr-4">
-                <img src={data.productImg} className="h-32 rounded-[10px]" />
+            <div className="flex items-center w-1/4 pr-4">
+                <img src={data.productImg} className="w-50 h-32 object-cover rounded-[10px]" />
                 <div className="ml-3">
                     <p className="font-serif text-left"> {data.productName} </p>
                     <p className="font-serif text-left"> {data.productType == 1 ? "crop" : "poultry"} </p>
@@ -35,9 +35,9 @@ function OrderCard({ data, cancelOrder }) {
                 </div>
             </div>
 
-            <p className="font-serif w-1/6"> PHP {data.productPrice} </p>
+            <p className="font-serif w-1/6"> ₱ {data.productPrice} </p>
             <p className="font-serif w-1/6"> {data.orderQty} {data.orderQty == 1 ? "pc" : "pcs"} </p>
-            <p className="font-serif text-[#BC6C25] w-1/6"> PHP {data.productPrice * data.orderQty} </p>
+            <p className="font-serif text-[#BC6C25] w-1/6"> ₱ {data.productPrice * data.orderQty} </p>
 
             <div className="flex flex-col items-center">
                 {toDisplay}

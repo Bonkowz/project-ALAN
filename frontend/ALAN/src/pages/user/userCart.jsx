@@ -144,6 +144,7 @@ function UserCart() {
         }
     }
 
+    // function for increasing order.
     function increaseOrder(id) {
         setMergedOrders(prev =>
             prev.map(order =>
@@ -160,6 +161,7 @@ function UserCart() {
         }).catch(console.error);
     }
 
+    // function for decreasing order
     function decreaseOrder(id) {
         setMergedOrders(prev =>
             prev.map(order =>

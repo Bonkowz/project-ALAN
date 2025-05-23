@@ -6,7 +6,7 @@ function CartCard({ data, isSelected, onToggleSelect, deleteItem, increaseOrder,
         <div className="flex items-center justify-evenly h-40 m-4 p-4 bg-white rounded-[25px]">
             <div className="flex items-center w-1/4 pr-4">
                 <input type="checkbox" className="size-5 mr-2" checked={isSelected} onChange={onToggleSelect} />
-                <img src={data.productImg} className="h-32 rounded-[10px]" />
+                <img src={data.productImg} className="w-50 h-32 object-cover rounded-[10px]" />
 
                 <div className="ml-3">
                     <p className="font-serif text-left"> {data.productName} </p>
