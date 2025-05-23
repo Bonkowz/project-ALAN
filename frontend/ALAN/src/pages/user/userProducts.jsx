@@ -1,19 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import ProductCard from '../../components/ProductCard'
+import AdminProductDropDown from '../../components/AdminProductDropDown'
 import logoImg from "../../assets/images/logo_placeholder.png";
 import cartImg from '../../assets/images/shopping_cart.png'
 import menuImg from '../../assets/images/menu.png'
 
 function UserProducts() {
     const [products, setProducts] = useState([]);
+    const [sortChoice, setSortChoice] = useState('productName');
+    const [sortOrder, setSortOrder] = useState('asc');
 
-    useEffect(() => {
-        fetch('http://localhost:5000/products/get-all-products')
+    const fetchProducts = () => {
+        const endpoint = `http://localhost:5000/products/get-all-products-sorted?sortBy=${sortChoice}&order=${sortOrder}`;
+
+        fetch(endpoint)
             .then(res => res.json())
             .then(data => setProducts(data))
             .catch(err => console.error("Error fetching products:", err));
-    }, []);
+    };
+
+    useEffect(() => {
+        fetchProducts();
+    }, [sortChoice, sortOrder]);
 
     const navigate = useNavigate();
 
@@ -61,20 +70,27 @@ function UserProducts() {
     return (
         <div>
             {/* header */}
-            <div className="w-full h-25 bg-[#DDA15E] flex mb-12 justify-evenly items-center">
+            <div className="w-full h-25 bg-[#DDA15E] flex mb-12 justify-between items-center">
                 <img src={logoImg} className="mx-5 h-20" />
-                <input
-                    type="search"
-                    className="bg-white w-[75%] h-[50%] p-3 pl-10 rounded-lg"
-                    placeholder="Search..."
-                />
-                <button onClick={() => handleNavigate('/cart')} id="cartButton">
-                    <img src={cartImg} className="mx-5 h-10" />
-                </button>
+                <div>
+                    <button onClick={() => handleNavigate('/cart')} id="cartButton">
+                        <img src={cartImg} className="mx-5 h-10" />
+                    </button>
 
-                <button onClick={() => handleNavigate('/orders')} id="cartButton">
-                    <img src={menuImg} className="mx-5 h-10" />
-                </button>
+                    <button onClick={() => handleNavigate('/orders')} id="cartButton">
+                        <img src={menuImg} className="mx-5 h-10" />
+                    </button>
+                </div>
+            </div>
+
+            {/* dropdown */}
+            <div className="flex justify-end mr-3">
+                <AdminProductDropDown
+                    selected={sortChoice}
+                    onSelect={setSortChoice}
+                    sortOrder={sortOrder}
+                    onToggleOrder={() => setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'))}
+                />
             </div>
 
             <div className="flex flex-wrap gap-4 justify-center items-center">
