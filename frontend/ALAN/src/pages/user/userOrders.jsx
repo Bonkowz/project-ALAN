@@ -9,9 +9,9 @@ const UserOrders = () => {
     async function fetchAllOrders() {
       try {
         const [pendingRes, canceledRes, completedRes] = await Promise.all([
-          fetch('http://localhost:5000/transaction/get-all-transactions-pending'),
-          fetch('http://localhost:5000/transaction/get-all-transactions-cancelled'),
-          fetch('http://localhost:5000/transaction/get-all-transactions-completed'),
+          fetch('http://localhost:5000/transaction/get-filtered-transactions-merged?orderStatus=0'),
+          fetch('http://localhost:5000/transaction/get-filtered-transactions-merged?orderStatus=1'),
+          fetch('http://localhost:5000/transaction/get-filtered-transactions-merged?orderStatus=2'),
         ]);
 
         const [pending, cancelled, completed] = await Promise.all([
@@ -70,8 +70,8 @@ const UserOrders = () => {
       </div>
 
       <div>
-        {orderItems.map((cartItem) => (
-          <OrderCard key={cartItem._id} data={cartItem} cancelOrder={cancelOrder} />
+        {orderItems.map((orderItem) => (
+          <OrderCard key={orderItem._id} data={orderItem} cancelOrder={cancelOrder} />
         ))}
       </div>
 

@@ -149,6 +149,7 @@ export const getFilteredTransactionsMerged = async (req, res) => {
           orderProductPrice: 1,
 
           productId: '$productData._id',
+          productImg: '$productData.productImg',
           productName: '$productData.productName',
           productType: '$productData.productType',
           productQty: '$productData.productQty',

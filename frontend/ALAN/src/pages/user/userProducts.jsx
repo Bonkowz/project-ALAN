@@ -71,7 +71,10 @@ function UserProducts() {
         <div>
             {/* header */}
             <div className="w-full h-25 bg-[#DDA15E] flex mb-12 justify-between items-center">
-                <img src={logoImg} className="mx-5 h-20" />
+                <div className="flex justify-start items-center">
+                    <img src={logoImg} className="mx-5 h-20" />
+                    <p className="text-4xl font-serif my-1 text-[#FEFAE0]">| Product Listings </p>
+                </div>
                 <div>
                     <button onClick={() => handleNavigate('/cart')} id="cartButton">
                         <img src={cartImg} className="mx-5 h-10" />
