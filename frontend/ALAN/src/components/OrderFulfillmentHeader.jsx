@@ -2,16 +2,9 @@ import logoImg from "../assets/images/logo_placeholder.png";
 
 function OrderFulfillmentHeader() {
     return (
-        <div className="w-full h-25 bg-[#606C38] flex mb-12 justify-evenly items-center text-white">
-            <img src={logoImg} className="mx-5 h-20" />
-
-            <span className="text-xl font-semibold mx-2">| Manage Orders</span>
-
-            <input
-                type="search"
-                className="bg-white w-[75%] h-[50%] p-3 pl-10 rounded-lg text-black"
-                placeholder="Search..."
-            />
+        <div className="w-full h-25 bg-[#606C38] flex mb-12 justify-start items-center pl-6 space-x-4">
+            <img src={logoImg} className="h-20" alt="Logo" />
+            <span className="text-4xl font-serif my-1 text-[#FEFAE0]">| Manage Orders</span>
         </div>
     );
 }

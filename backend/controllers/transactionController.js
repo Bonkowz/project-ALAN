@@ -1,59 +1,208 @@
 import Transaction from '../models/Transaction.js';
 import Product from '../models/Product.js';
+import mongoose from 'mongoose';
 import { ObjectId } from 'mongodb';
 
 // NOTE: POST
 export const addTransaction = async (req, res) => {
-  if (ObjectId.isValid(req.params.id)){
-    try {
-      const productId = req.params.id;
-      const {orderQty, orderStatus, email, dateOrdered, time} = req.body;
-      const newTransaction = new Transaction({productId, orderQty, orderStatus, email, dateOrdered, time});
-      await newTransaction.save();
-      res.status(200).json({message:"Transaction created successfully!"});
-    } catch (err) {
-      res.status(500).json({error: "Error adding transaction!"});
-    }
-  }else{
-    res.status(500).json({error: "Document ID not valid!"});
+  if (!ObjectId.isValid(req.body.productId)) {
+    res.status(500).json({ error: "Document ID not valid!" });
+    return;
   }
-}
 
-// NOTE: GET
-export const getAllTransactions = async (req, res) => {
+  const product = await Product.findById(req.body.productId);
+  if (!product) {
+    res.status(500).json({ error: 'Product does not exist!' });
+    return;
+  }
+
   try {
-    const transactions = await Transaction.find();
-    res.status(200).json(transactions);
+    const {
+      productId,
+      orderQty,
+      orderStatus,
+      email,
+      dateOrdered,
+      time
+    } = req.body;
+
+    // Use the product's current price 
+    const orderProductPrice = product.productPrice;
+
+    // TODO: Fix add transaction logic for existing product id's
+    var result = await Transaction.updateOne(
+      { productId: new ObjectId(req.body.productId), email: req.body.email, orderStatus: 3 },
+      { $inc: { orderQty: 1 } }
+    );
+
+    if (result.modifiedCount > 0) {
+      return res.status(200).json({ message: "Transaction updated successfully!" });
+    }
+
+    const newTransaction = new Transaction({
+      productId,
+      orderProductPrice,
+      orderQty,
+      orderStatus,
+      email,
+      dateOrdered,
+      time
+    })
+
+    await newTransaction.save();
+    res.status(200).json({ message: "Transaction created successfully!" });
   } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch transactions' });
+    console.error(err);
+    res.status(500).json({ error: "Error adding transaction!" });
   }
 };
 
+// NOTE: GET
+// NOTE: (Int: 0 Pending / 1 Completed / 2 Canceled / 3 Cart)
+export const getAllTransactions = async (req, res) => {
+  const transactions = await Transaction.find();
+  try {
+    res.status(200).json(transactions);
+    return;
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch transactions' });
+    return;
+  }
+};
+
+export const getAllTransactionsPending = async (req, res) => {
+  const transactions = await Transaction.find({ orderStatus: 0 });
+  try {
+    res.status(200).json(transactions);
+    return;
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch transactions' });
+    return;
+  }
+};
+
+export const getAllTransactionsCompleted = async (req, res) => {
+  const transactions = await Transaction.find({ orderStatus: 1 });
+  try {
+    res.status(200).json(transactions);
+    return;
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch transactions' });
+    return;
+  }
+};
+
+export const getAllTransactionsCancelled = async (req, res) => {
+  const transactions = await Transaction.find({ orderStatus: 2 });
+  try {
+    res.status(200).json(transactions);
+    return;
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch transactions' });
+    return;
+  }
+};
+
+export const getAllTransactionsCart = async (req, res) => {
+  const transactions = await Transaction.find({ orderStatus: 3 });
+  try {
+    res.status(200).json(transactions);
+    return;
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch transactions' });
+    return;
+  }
+};
+// https://www.geeksforgeeks.org/mongoose-aggregate-aggregate-api/
+export const getFilteredTransactionsMerged = async (req, res) => {
+  try {
+    // Parse the orderStatus from the query parameters
+    const statusFilter = parseInt(req.query.orderStatus);
+
+    if (isNaN(statusFilter)) {
+      return res.status(400).json({ error: 'Invalid or missing orderStatus parameter' });
+    }
+
+    const transactions = await Transaction.aggregate([
+      {
+        $match: { orderStatus: statusFilter } // Filter by orderStatus
+      },
+      {
+        $lookup: {
+          from: 'product',
+          localField: 'productId',
+          foreignField: '_id',
+          as: 'productData'
+        }
+      },
+      {
+        $unwind: '$productData'
+      },
+      {
+        $project: {
+          _id: 1,
+          email: 1,
+          orderQty: 1,
+          orderStatus: 1,
+          dateOrdered: 1,
+          time: 1,
+          orderProductPrice: 1,
+
+          productId: '$productData._id',
+          productName: '$productData.productName',
+          productType: '$productData.productType',
+          productQty: '$productData.productQty',
+          productPrice: '$productData.productPrice',
+        }
+      }
+    ]);
+
+    res.status(200).json(transactions);
+  } catch (err) {
+    console.error('Aggregation error:', err);
+    res.status(500).json({ error: 'Failed to fetch merged transactions' });
+  }
+};
+
+
+
 // NOTE: PUT
 export const updateTransaction = async (req, res) => {
-  if (ObjectId.isValid(req.params.id)){
-    try {
-      const newTransaction = req.body;
-      await Transaction.updateOne({_id: Object(req.params.id)}, {$set: newTransaction});
-      res.status(200).json({message: "Updated transaction!"});
-    } catch (err) {
-      res.status(500).json({ error: 'Failed to update transaction' });
-    }
-  }else{
-    res.status(500).json({error: "Document ID not valid!"});
+  const newTransaction = req.body;
+  if (!ObjectId.isValid(req.body.id)) {
+    res.status(500).json({ error: "Document ID not valid!" });
+    return;
+  }
+  if (!await Transaction.findOne({ _id: Object(req.body.id) })) {
+    res.status(500).json({ error: 'Transaction does not exist!' });
+    return;
+  }
+  try {
+    await Transaction.updateOne({ _id: Object(req.body.id) }, { $set: newTransaction });
+    res.status(200).json({ message: "Updated transaction!" });
+    return;
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update transaction' });
+    return;
   }
 };
 
 // NOTE: DELETE
 export const removeTransaction = async (req, res) => {
-  if (ObjectId.isValid(req.params.id)){
-    try {
-      await Transaction.deleteOne({_id: Object(req.params.id)});
-      res.status(200).json({ message: "Deleted transaction!"});
-    } catch (err) {
-      res.status(500).json({ error: 'Failed to delete transaction' });
-    }
-  }else{
-    res.status(500).json({error: "Document ID not valid!"});
+  if (!ObjectId.isValid(req.body.id)) {
+    res.status(500).json({ error: "Document ID not valid!" });
+    return;
+  }
+  if (!await Transaction.findOne({ _id: Object(req.body.id) })) {
+    res.status(500).json({ error: 'Transaction does not exist!' });
+    return;
+  }
+  try {
+    await Transaction.deleteOne({ _id: Object(req.body.id) });
+    res.status(200).json({ message: "Deleted transaction!" });
+    return;
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to delete transaction' });
+    return;
   }
 };

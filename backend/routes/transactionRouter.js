@@ -1,11 +1,26 @@
 import express from 'express';
-import { addTransaction, getAllTransactions, updateTransaction, removeTransaction, } from '../controllers/transactionController.js';
+import { 
+    addTransaction, 
+    getAllTransactions, 
+    getAllTransactionsPending, 
+    getAllTransactionsCompleted, 
+    getAllTransactionsCancelled, 
+    getAllTransactionsCart,
+    updateTransaction, 
+    removeTransaction, 
+    getFilteredTransactionsMerged,
+} from '../controllers/transactionController.js';
 
 const transactionRouter = express.Router();
 
-transactionRouter.post('/add-transaction/:id', addTransaction);
+transactionRouter.post('/add-transaction', addTransaction);
 transactionRouter.get('/get-all-transactions', getAllTransactions);
-transactionRouter.patch('/update-transaction/:id', updateTransaction);
-transactionRouter.delete('/remove-transaction/:id', removeTransaction);
+transactionRouter.get('/get-all-transactions-pending', getAllTransactionsPending);
+transactionRouter.get('/get-all-transactions-completed', getAllTransactionsCompleted);
+transactionRouter.get('/get-all-transactions-cancelled', getAllTransactionsCancelled);
+transactionRouter.get('/get-all-transactions-cart', getAllTransactionsCart);
+transactionRouter.get('/get-filtered-transactions-merged', getFilteredTransactionsMerged);
+transactionRouter.patch('/update-transaction', updateTransaction);
+transactionRouter.delete('/remove-transaction', removeTransaction);
 
 export default transactionRouter;

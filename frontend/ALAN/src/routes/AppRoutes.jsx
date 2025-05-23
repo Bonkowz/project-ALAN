@@ -17,8 +17,11 @@ import AdminOrderFulfillment from '../pages/admin/adminOrderFulfillment';
 import AdminSales from '../pages/admin/adminSales';
 import Landing from '../pages/Landing';
 
+// TODO: add isUserSignedIn to relevant paths
 
 const AppRoutes = () => {
+  const isUserSignedIn = !!localStorage.getItem('token');
+
   return (
     <BrowserRouter>
       <Routes>
@@ -33,6 +36,7 @@ const AppRoutes = () => {
         <Route path="/orders" element={<UserOrders />} />
 
         {/* Admin routes */}
+        {/* {isUserSignedIn && <Route path="/admin/dashboard" element={<AdminDashboard />} />} */}
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/userManagement" element={<AdminUserManagement />} />
         <Route path="/admin/products" element={<AdminProducts />} />

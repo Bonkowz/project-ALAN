@@ -15,7 +15,7 @@ function AdminSales() {
   const fetchData = () => {
     Promise.all([
       fetch('http://localhost:5000/products/get-all-products').then(res => res.json()),
-      fetch('http://localhost:5000/transactions/get-all-transactions').then(res => res.json())
+      fetch('http://localhost:5000/transaction/get-all-transactions').then(res => res.json())
     ])
       .then(([productsData, transactionsData]) => {
         setProducts(productsData);
@@ -35,7 +35,7 @@ function AdminSales() {
   return (
     <div className="bg-[#FEFAE0] min-h-screen">
       <SalesHeader />
-      
+
       <div className="flex flex-wrap gap-4 justify-center items-center p-4">
         <SalesLabel />
         {products.map(product => {
