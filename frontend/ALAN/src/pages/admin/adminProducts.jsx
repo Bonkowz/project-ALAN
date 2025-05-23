@@ -19,7 +19,7 @@ function AdminProducts() {
 
   // Fetch products with the current sorting configuration
   const fetchProducts = () => {
-    const endpoint = `http://localhost:5000/products/get-all-products-sorted?sortBy=${sortChoice}&order=${sortOrder}`;
+    const endpoint = `http://localhost:5000/product/get-all-products-sorted?sortBy=${sortChoice}&order=${sortOrder}`;
 
     fetch(endpoint)
       .then(res => res.json())

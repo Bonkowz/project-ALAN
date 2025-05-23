@@ -5,7 +5,7 @@ function OrderCard({ data, cancelOrder }) {
     var toDisplay;
 
     useEffect(() => {
-        fetch('http://localhost:5000/products/get-all-products')
+        fetch('http://localhost:5000/product/get-all-products')
             .then(res => res.json())
             .then(data => setProducts(data))
             .catch(err => console.error("Error fetching products:", err));
