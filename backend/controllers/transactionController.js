@@ -164,6 +164,89 @@ export const getFilteredTransactionsMerged = async (req, res) => {
   }
 };
 
+export const getFilteredTransactionsMergedByDate = async (req, res) => {
+  const { orderStatus, range } = req.query;
+
+  // Validate orderStatus
+  const statusFilter = parseInt(orderStatus);
+  if (isNaN(statusFilter)) {
+    return res.status(400).json({ error: 'Invalid or missing orderStatus parameter' });
+  }
+
+  // Compute start date based on range
+  let startDate = new Date();
+  const now = new Date();
+
+  switch (range) {
+    case 'Weekly':
+      const currentDay = now.getDay(); // Sunday = 0
+      startDate.setDate(now.getDate() - currentDay);
+      startDate.setHours(0, 0, 0, 0);
+      break;
+    case 'Monthly':
+      startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+      break;
+    case 'Annual':
+      startDate = new Date(now.getFullYear(), 0, 1);
+      break;
+    default:
+      return res.status(400).json({ error: 'Invalid or missing range parameter' });
+  }
+
+  // Format to YYYY-MM-DD string
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+  const formattedStartDate = formatDate(startDate);
+  console.log("Filtering from:", formattedStartDate);
+
+  try {
+    const transactions = await Transaction.aggregate([
+      {
+        $match: {
+          orderStatus: statusFilter,
+          dateOrdered: { $gte: formattedStartDate }
+        }
+      },
+      {
+        $lookup: {
+          from: 'product',
+          localField: 'productId',
+          foreignField: '_id',
+          as: 'productData'
+        }
+      },
+      {
+        $unwind: '$productData'
+      },
+      {
+        $project: {
+          _id: 1,
+          email: 1,
+          orderQty: 1,
+          orderStatus: 1,
+          dateOrdered: 1,
+          time: 1,
+          orderProductPrice: 1,
+
+          productId: '$productData._id',
+          productName: '$productData.productName',
+          productType: '$productData.productType',
+          productQty: '$productData.productQty',
+          productPrice: '$productData.productPrice',
+        }
+      }
+    ]);
+
+    res.status(200).json(transactions);
+  } catch (err) {
+    console.error('Aggregation error:', err);
+    res.status(500).json({ error: 'Failed to fetch filtered transactions by date' });
+  }
+};
 
 
 // NOTE: PUT

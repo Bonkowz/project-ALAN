@@ -3,8 +3,8 @@ import chickenBreastImg from "../assets/images/chicken_breast.jpg";
 import '../index.css';
 
 function OrderFulfillmentCard({ data, onConfirm }) {
-    const price = data.orderProductPrice || 10;
-    const quantity = data.orderQty || 1;
+    const price = data.orderProductPrice;
+    const quantity = data.orderQty;
     const total = price * quantity;
     const productTypeLabel = data.productType === 1 ? 'Crop' : data.productType === 2 ? 'Poultry' : 'Unknown Type';
 

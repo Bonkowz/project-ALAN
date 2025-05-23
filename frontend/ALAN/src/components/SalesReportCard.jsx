@@ -3,11 +3,9 @@ import chickenBreastImg from "../assets/images/chicken_breast.jpg";
 import '../index.css';
 
 function SalesReportCard({ data, transactions = [] }) {
-    const price = data.productPrice || 10;
-
-    // Compute total units sold and revenue from transactions
+    // Compute total units sold and total revenue from individual transaction prices
     const totalUnitsSold = transactions.reduce((sum, t) => sum + (t.orderQty || 0), 0);
-    const totalRevenue = totalUnitsSold * price;
+    const totalRevenue = transactions.reduce((sum, t) => sum + ((t.orderProductPrice || 0) * (t.orderQty || 0)), 0);
 
     const productTypeLabel = data.productType === 1 ? 'Crop' : data.productType === 2 ? 'Poultry' : 'Unknown Type';
 
@@ -17,7 +15,7 @@ function SalesReportCard({ data, transactions = [] }) {
             className="w-full bg-white rounded-[25px] overflow-hidden my-2 max-w-4xl mx-auto shadow-md"
         >
             <div className="flex items-center text-left px-4 py-2">
-                <div className="w-1/2 flex items-center">
+                <div className="w-2/3 flex items-center">
                     {/* Image */}
                     <div className="w-1/5 flex-shrink-0">
                         <img
@@ -34,15 +32,13 @@ function SalesReportCard({ data, transactions = [] }) {
                         <p className="text-xs text-gray-500">{data.productDescription}</p>
                     </div>
                 </div>
-                
-                <div className="w-1/2 flex justify-between pr-2">
-                    <div className="w-1/3 text-center">
-                        <p className="text-lg font-mono">₱{price.toFixed(2)}</p>
-                    </div>
-                    <div className="w-1/3 text-center">
+
+                {/* Metrics */}
+                <div className="w-1/3 flex justify-evenly pr-2">
+                    <div className="text-center">
                         <p className="text-lg font-mono">{totalUnitsSold}</p>
                     </div>
-                    <div className="w-1/3 text-center">
+                    <div className="text-center">
                         <p className="text-lg font-mono">₱{totalRevenue.toFixed(2)}</p>
                     </div>
                 </div>

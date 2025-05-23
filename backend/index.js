@@ -6,6 +6,7 @@ import productRouter from './routes/productRouter.js';
 import transactionRouter from './routes/transactionRouter.js';
 import userRouter from './routes/userRouter.js';
 import authRouter from './routes/authRouter.js';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -17,9 +18,12 @@ const PORT = 5000;
 app.use(
   cors({
     origin: "http://localhost:5173",
+    credentials: true,
   }
   ));
 app.use(express.json());
+app.use(cookieParser());
+app.use(express.urlencoded({extended: false}))
 
 // NOTE: shows missing URI error
 if (!process.env.MONGO_URI) {

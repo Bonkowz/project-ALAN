@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react';
+
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { UserContext } from '../context/userContext';
 // Assuming you have an image for the sign-in page header, replace with actual path
 // import signInHeaderImg from "../assets/images/signin-header.png";
 
@@ -10,8 +12,10 @@ import axios from 'axios';
 // TODO: make successful login not a alert
 // TODO: add signout stuff
 
+
 const Signin = () => {
-  const navigate = useNavigate();
+  const { user, loading } = useContext(UserContext);
+  const navigate = useNavigate()
 
   const handleNavigate = (path) => {
     navigate(path);
@@ -23,7 +27,7 @@ const Signin = () => {
 
   useEffect(() => {
     fetchUsers();
-  }, [])
+  }, []);
 
   const fetchUsers = () => {
     axios
@@ -38,13 +42,22 @@ const Signin = () => {
     try {
       const response = await axios.post('http://localhost:5000/auth/login', { email, password })
       const token = response.data.token
-      alert('Login successful')
+
+      const loggedInUserType = response.data.userType ;
+      // alert('Login successful')
       setEmail('')
       setPassword('')
       fetchUsers();
-      navigate('/admin/dashboard')
-      window.location.reload();
       localStorage.setItem('token', token)
+      if (loggedInUserType === 'administrator') {
+        navigate('/admin/dashboard');
+      } else if (loggedInUserType === 'customer') {
+        navigate('/products'); 
+      } else {
+        navigate('/'); 
+      }
+      // window.location.reload();
+
     } catch (error) {
       console.log('Login Error', error)
     }
