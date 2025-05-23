@@ -10,6 +10,14 @@ function CartCard({ data, isSelected, onToggleSelect, deleteItem }) {
             .catch(err => console.error("Error fetching products:", err));
     }, []);
 
+    function increaseOrder() {
+        
+    }
+
+    function decreaseOrder() {
+
+    }
+
     const product = products.find(p => p._id === data.productId);
     if (!product) return <p>Loading product...</p>;
 

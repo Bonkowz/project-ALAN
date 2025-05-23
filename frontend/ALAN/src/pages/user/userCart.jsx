@@ -37,7 +37,6 @@ function UserCart() {
     }, [cartItems]);
 
     // for the total price of selected items
-    // for the total price of selected items
     useEffect(() => {
         const total = cartItems.reduce((acc, item) => {
             if (selected.includes(item._id)) {
@@ -193,6 +192,7 @@ function UserCart() {
                     </div>
                 </div>
 
+                {/* for footer */}
                 <div className="flex items-center justify-center">
                     <div>
                         <p className="font-serif text-2xl text-right"> Total: ₱ {totalPrice} </p>
