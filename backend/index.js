@@ -20,7 +20,7 @@ app.use(
     origin: "http://localhost:5173",
     credentials: true,
   }
-));
+  ));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({extended: false}))
@@ -33,25 +33,25 @@ if (!process.env.MONGO_URI) {
 
 // NOTE: connect to mongoose 
 mongoose
-.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => {
-  // NOTE: connect to port
-  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-  console.log('MongoDB connected')
-})
-.catch(err => {
-  console.error('MongoDB error:', err)
-});
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    // NOTE: connect to port
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    console.log('MongoDB connected')
+  })
+  .catch(err => {
+    console.error('MongoDB error:', err)
+  });
 
 app.get('/api', (req, res) => {
   res.json({ message: 'Hello from backend' });
 });
 
 // NOTE: routes
-app.use('/product', productRouter);
+app.use('/products', productRouter);
 app.use('/user', userRouter);
 app.use('/transaction', transactionRouter);
 app.use('/auth', authRouter);

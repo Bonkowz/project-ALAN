@@ -4,8 +4,8 @@ import { ObjectId } from 'mongodb';
 // NOTE: POST
 export const addProduct = async (req, res) => {
   try {
-    const {productName, productDescription, productType, productQty, productPrice} = req.body;
-    const newProduct = new Product({productName, productDescription, productType, productQty, productPrice});
+    const { productName, productDescription, productType, productQty, productPrice } = req.body;
+    const newProduct = new Product({ productName, productDescription, productType, productQty, productPrice });
     await newProduct.save();
     res.status(200).json({ message: "Product created successfully!" });
     return;

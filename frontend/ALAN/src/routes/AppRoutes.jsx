@@ -22,6 +22,7 @@ import Landing from '../pages/Landing';
 // TODO: add isUserSignedIn to relevant paths
 
 const AppRoutes = () => {
+
   return (
     <UserContextProvider>
       <BrowserRouter>
@@ -50,6 +51,7 @@ const AppRoutes = () => {
       </BrowserRouter>
     </UserContextProvider>
   )
+
 };
 
 export default AppRoutes;

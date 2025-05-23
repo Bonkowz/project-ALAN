@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -41,6 +42,7 @@ const Signin = () => {
     try {
       const response = await axios.post('http://localhost:5000/auth/login', { email, password })
       const token = response.data.token
+
       const loggedInUserType = response.data.userType ;
       // alert('Login successful')
       setEmail('')
@@ -55,6 +57,7 @@ const Signin = () => {
         navigate('/'); 
       }
       // window.location.reload();
+
     } catch (error) {
       console.log('Login Error', error)
     }

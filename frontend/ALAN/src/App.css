@@ -3,19 +3,27 @@ button:hover {
   cursor: pointer;
 }
 
-#root {
-  max-width: 1280px;
+/* #root {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-}
+} */
 
-#cartButton {
+#cartButton,
+#addToCartButton {
   transition: transform 0.2s ease;
 }
 
 #cartButton:hover {
   transform: translateY(-4px);
+}
+
+#addToCartButton:hover {
+  transform: scale(1.03);
+}
+
+#addToCartButton:active {
+  transform: scale(0.97);
 }
 
 .logo {

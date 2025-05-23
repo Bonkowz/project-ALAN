@@ -22,6 +22,7 @@ function AdminSales() {
 
   const fetchData = () => {
 
+
   // Use different transaction route based on activeRange
   const transactionsUrl =
     activeRange === 'All'
@@ -50,6 +51,7 @@ function AdminSales() {
   const handleViewClick = (view) => {
     setActiveView(view);
     console.log(`View selected: ${view}`);
+
   };
 
   const totalRevenue = transactions.reduce((sum, tx) => {
