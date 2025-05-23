@@ -125,7 +125,10 @@ export const getFilteredTransactionsMerged = async (req, res) => {
 
     const transactions = await Transaction.aggregate([
       {
-        $match: { orderStatus: statusFilter } // Filter by orderStatus
+        $match: {
+          orderStatus: statusFilter,
+          email: req.query.email
+        } // Filter by orderStatus and email
       },
       {
         $lookup: {

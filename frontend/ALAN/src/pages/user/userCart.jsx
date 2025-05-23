@@ -1,19 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import CartHeader from '../../components/CartHeader'
 import CartCard from '../../components/CartCard'
+import { UserContext } from '../../context/userContext';
 
 function UserCart() {
     const [selected, setSelected] = useState([]);
     const [totalItems, setTotalItems] = useState(0);
     const [totalPrice, setTotalPrice] = useState(0);
     const [mergedOrders, setMergedOrders] = useState([]);
+    const { user } = useContext(UserContext);
 
     useEffect(() => {
         fetchData();
     }, []);
 
     const fetchData = () => {
-        fetch('http://localhost:5000/transaction/get-filtered-transactions-merged?orderStatus=3')
+        fetch(`http://localhost:5000/transaction/get-filtered-transactions-merged?orderStatus=3&email=${user.email}`)
             .then(res => res.json())
             .then(data => {
                 setMergedOrders(data);

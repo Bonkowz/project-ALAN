@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import CartHeader from '../../components/CartHeader';
 import OrderCard from '../../components/OrderCard';
+import { UserContext } from '../../context/userContext';
 
 const UserOrders = () => {
   const [orderItems, setOrderITems] = useState([]);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     async function fetchAllOrders() {
       try {
         const [pendingRes, canceledRes, completedRes] = await Promise.all([
-          fetch('http://localhost:5000/transaction/get-filtered-transactions-merged?orderStatus=0'),
-          fetch('http://localhost:5000/transaction/get-filtered-transactions-merged?orderStatus=1'),
-          fetch('http://localhost:5000/transaction/get-filtered-transactions-merged?orderStatus=2'),
+          fetch(`http://localhost:5000/transaction/get-filtered-transactions-merged?orderStatus=0&email=${user.email}`),
+          fetch(`http://localhost:5000/transaction/get-filtered-transactions-merged?orderStatus=1&email=${user.email}`),
+          fetch(`http://localhost:5000/transaction/get-filtered-transactions-merged?orderStatus=2&email=${user.email}`),
         ]);
 
         const [pending, cancelled, completed] = await Promise.all([
