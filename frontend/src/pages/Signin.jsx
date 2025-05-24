@@ -43,7 +43,7 @@ const Signin = () => {
       const response = await axios.post('http://localhost:5000/auth/login', { email, password })
       const token = response.data.token
 
-      const loggedInUserType = response.data.userType ;
+      const loggedInUserType = response.data.userType;
       // alert('Login successful')
       setEmail('')
       setPassword('')
@@ -52,9 +52,9 @@ const Signin = () => {
       if (loggedInUserType === 'administrator') {
         navigate('/admin/dashboard');
       } else if (loggedInUserType === 'customer') {
-        navigate('/products'); 
+        navigate('/products');
       } else {
-        navigate('/'); 
+        navigate('/');
       }
       window.location.reload();
     } catch (error) {

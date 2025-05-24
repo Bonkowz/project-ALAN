@@ -1,29 +1,29 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import CartHeader from '../../components/CartHeader'
 import CartCard from '../../components/CartCard'
+import { UserContext } from '../../context/userContext';
 
 function UserCart() {
-    const [cartItems, setCartItems] = useState([]);
     const [selected, setSelected] = useState([]);
     const [totalItems, setTotalItems] = useState(0);
     const [totalPrice, setTotalPrice] = useState(0);
-    const [products, setProducts] = useState([]);
+    const [mergedOrders, setMergedOrders] = useState([]);
+    const { user } = useContext(UserContext);
 
-    // get product items
     useEffect(() => {
-        fetch('http://localhost:5000/product/get-all-products')
-            .then(res => res.json())
-            .then(data => setProducts(data))
-            .catch(err => console.error("Error fetching products:", err));
+        fetchData();
     }, []);
 
-    // gets cart transactions
-    useEffect(() => {
-        fetch('http://localhost:5000/transaction/get-all-transactions-cart')
+    const fetchData = () => {
+        fetch(`http://localhost:5000/transaction/get-filtered-transactions-merged?orderStatus=3&email=${user.email}`)
             .then(res => res.json())
-            .then(data => setCartItems(data))
-            .catch(err => console.error("Error fetching products:", err));
-    }, []);
+            .then(data => {
+                setMergedOrders(data);
+            })
+
+            .catch(err => console.error("Error fetching merged orders:", err));
+
+    };
 
     // for logging items (checking purposes)
     useEffect(() => {
@@ -32,24 +32,21 @@ function UserCart() {
 
     // for the total number of items in the cart
     useEffect(() => {
-        const total = cartItems.reduce((acc, curr) => acc + curr.orderQty, 0);
+        const total = mergedOrders.reduce((acc, curr) => acc + curr.orderQty, 0);
         setTotalItems(total);
-    }, [cartItems]);
+    }, [mergedOrders]);
 
     // for the total price of selected items
     useEffect(() => {
-        const total = cartItems.reduce((acc, item) => {
+        const total = mergedOrders.reduce((acc, item) => {
             if (selected.includes(item._id)) {
-                const product = products.find(p => p._id === item.productId);
-                if (product) {
-                    return acc + (product.productPrice * item.orderQty);
-                }
+                return acc + (item.productPrice * item.orderQty);
             }
             return acc;
         }, 0);
 
         setTotalPrice(total);
-    }, [selected, cartItems, products]);
+    }, [selected, mergedOrders]);
 
     // for selecting an item
     function selectItem(productId) {
@@ -65,7 +62,7 @@ function UserCart() {
         const isChecked = e.target.checked;
 
         if (isChecked) {
-            const allProductIds = cartItems.map(p => p._id);
+            const allProductIds = mergedOrders.map(p => p._id);
             setSelected(allProductIds);
         } else {
             setSelected([]);
@@ -86,7 +83,7 @@ function UserCart() {
             const result = await response.json();
             if (response.ok) {
                 console.log(result.message);
-                setCartItems(prev => prev.filter(item => item._id !== transactionId));
+                setMergedOrders(prev => prev.filter(item => item._id !== transactionId));
             } else {
                 console.error('Error:', result.error);
             }
@@ -115,7 +112,7 @@ function UserCart() {
                 console.error("Some deletions failed");
             }
 
-            setCartItems(prev => prev.filter(item => !selected.includes(item._id)));
+            setMergedOrders(prev => prev.filter(item => !selected.includes(item._id)));
             setSelected([]);
         } catch (error) {
             console.error('Network error:', error);
@@ -142,12 +139,50 @@ function UserCart() {
                 console.error("Some updates failed");
             }
 
-            setCartItems(prev => prev.filter(item => !selected.includes(item._id)));
+            setMergedOrders(prev => prev.filter(item => !selected.includes(item._id)));
             setSelected([]);
         } catch (error) {
             console.error('Network error:', error);
         }
     }
+
+    // function for increasing order.
+    function increaseOrder(id) {
+        setMergedOrders(prev =>
+            prev.map(order =>
+                order._id === id
+                    ? { ...order, orderQty: order.orderQty + 1 }
+                    : order
+            )
+        );
+
+        fetch('http://localhost:5000/transaction/update-transaction', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id, orderQty: mergedOrders.find(o => o._id === id).orderQty + 1 }),
+        }).catch(console.error);
+    }
+
+    // function for decreasing order
+    function decreaseOrder(id) {
+        setMergedOrders(prev =>
+            prev.map(order =>
+                order._id === id && order.orderQty > 1
+                    ? { ...order, orderQty: order.orderQty - 1 }
+                    : order
+            )
+        );
+
+        const order = mergedOrders.find(o => o._id === id);
+        if (order.orderQty > 1) {
+            fetch('http://localhost:5000/transaction/update-transaction', {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, orderQty: order.orderQty - 1 }),
+            }).catch(console.error);
+        }
+    }
+
 
     return (
         <div className="bg-[#FEFAE0] min-h-screen">
@@ -165,13 +200,15 @@ function UserCart() {
 
             <div>
                 {
-                    cartItems.map((product) => (
+                    mergedOrders.map((product) => (
                         <CartCard
                             key={product._id}
                             data={product}
                             isSelected={selected.includes(product._id)}
                             onToggleSelect={() => selectItem(product._id)}
                             deleteItem={deleteItem}
+                            increaseOrder={increaseOrder}
+                            decreaseOrder={decreaseOrder}
                         />
                     ))
                 }

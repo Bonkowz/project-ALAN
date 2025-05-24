@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
 import ProductCard from '../../components/ProductCard'
 import AdminProductDropDown from '../../components/AdminProductDropDown'
 import logoImg from "../../assets/images/logo_placeholder.png";
 import cartImg from '../../assets/images/shopping_cart.png'
 import menuImg from '../../assets/images/menu.png'
+import { UserContext } from '../../context/userContext';
 
 function UserProducts() {
     const [products, setProducts] = useState([]);
     const [sortChoice, setSortChoice] = useState('productName');
     const [sortOrder, setSortOrder] = useState('asc');
+    const { user } = useContext(UserContext);
 
     const fetchProducts = () => {
         const endpoint = `http://localhost:5000/product/get-all-products-sorted?sortBy=${sortChoice}&order=${sortOrder}`;
@@ -38,7 +40,7 @@ function UserProducts() {
             productId: productId,
             orderQty: 1,
             orderStatus: 3,
-            email: 'user@example.com',
+            email: user.email,
             dateOrdered: date,
             time: time
         };
@@ -71,7 +73,10 @@ function UserProducts() {
         <div>
             {/* header */}
             <div className="w-full h-25 bg-[#DDA15E] flex mb-12 justify-between items-center">
-                <img src={logoImg} className="mx-5 h-20" />
+                <div className="flex justify-start items-center">
+                    <img src={logoImg} className="mx-5 h-20" />
+                    <p className="text-4xl font-serif my-1 text-[#FEFAE0]">| Product Listings </p>
+                </div>
                 <div>
                     <button onClick={() => handleNavigate('/cart')} id="cartButton">
                         <img src={cartImg} className="mx-5 h-10" />
