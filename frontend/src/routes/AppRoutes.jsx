@@ -4,6 +4,7 @@ import ProtectedRoute from './ProtectedRoute';
 
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
+import Unauthorized from '../pages/Unauthorized';
 
 // Import user pages
 import UserProducts from '../pages/user/userProducts';
@@ -18,6 +19,7 @@ import AdminOrderFulfillment from '../pages/admin/adminOrderFulfillment';
 import AdminSales from '../pages/admin/adminSales';
 import Landing from '../pages/Landing';
 
+
 const AppRoutes = () => {
 
   return (
@@ -28,6 +30,7 @@ const AppRoutes = () => {
             <Route path="/" element={<Landing />} />
             <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/unauthorized" element={<Unauthorized />} />
 
           {/* User routes */}
           <Route element={<ProtectedRoute allowedRoles={['customer']} />}>

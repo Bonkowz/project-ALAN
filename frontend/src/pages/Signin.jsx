@@ -7,7 +7,7 @@ import axios from 'axios';
 // import signInHeaderImg from "../assets/images/signin-header.png";
 
 // TODO: fix design of page
-// TODO: add regex, required, hints, for fields
+// TODO: add regex, required, hints, for fields, special characters not allowed 
 
 const Signin = () => {
   const { user, loading } = useContext(UserContext);
