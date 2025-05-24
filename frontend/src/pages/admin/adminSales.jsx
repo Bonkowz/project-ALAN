@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import SalesReportCard from '../../components/SalesReportCard';
 import SalesHeader from '../../components/SalesHeader';
 import SalesLabel from '../../components/SalesLabel';

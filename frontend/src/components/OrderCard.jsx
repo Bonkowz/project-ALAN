@@ -1,5 +1,3 @@
-import React, { useState, useEffect } from 'react';
-
 function OrderCard({ data, cancelOrder }) {
     var toDisplay;
     switch (data.orderStatus) {

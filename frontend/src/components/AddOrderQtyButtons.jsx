@@ -1,5 +1,3 @@
-import React from 'react';
-
 function AddOrderQtyButton({ orderQty, increaseOrder, decreaseOrder }) {
     return (
         <div className="flex items-center w-1/5">

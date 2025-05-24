@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import AdminProductCard from '../../components/AdminProductCard';
 import AdminProductHeader from '../../components/AdminProductHeader';
 import AdminProductDropDown from '../../components/AdminProductDropDown';

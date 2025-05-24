@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import AddOrderQtyButton from './AddOrderQtyButtons';
 
 function CartCard({ data, isSelected, onToggleSelect, deleteItem, increaseOrder, decreaseOrder }) {

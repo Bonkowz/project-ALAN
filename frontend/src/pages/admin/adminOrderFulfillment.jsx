@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import OrderFulfillmentCard from '../../components/OrderFulfillmentCard';
 import OrderFulfillmentHeader from '../../components/OrderFulfillmentHeader';
 import OrderFulfillmentLabel from '../../components/OrderFulfillmentLabel';

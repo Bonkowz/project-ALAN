@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
 import ProductCard from '../../components/ProductCard'
 import AdminProductDropDown from '../../components/AdminProductDropDown'
@@ -6,6 +6,7 @@ import logoImg from "../../assets/images/logo_placeholder.png";
 import cartImg from '../../assets/images/shopping_cart.png'
 import menuImg from '../../assets/images/menu.png'
 import { UserContext } from '../../context/userContext';
+import axios from 'axios';
 
 function UserProducts() {
     const [products, setProducts] = useState([]);
@@ -31,6 +32,13 @@ function UserProducts() {
     const handleNavigate = (path) => {
         navigate(path);
     };
+
+    const logout = async (event) => {
+        console.log("test");
+        await axios.post('http://localhost:5000/auth/logout');
+        handleNavigate('/signin');
+        window.location.reload();
+    }
 
     const addTransaction = async (productId) => {
         const now = new Date();
@@ -78,17 +86,21 @@ function UserProducts() {
                     <p className="text-4xl font-serif my-1 text-[#FEFAE0]">| Product Listings </p>
                 </div>
                 <div>
-                    <button onClick={() => handleNavigate('/cart')} id="cartButton">
-                        <img src={cartImg} className="mx-5 h-10" />
+                    <button className="w-20 h-10 bg-[#606C38] text-[#FEFAE0] rounded-[25px] m-1"
+                        onClick={() => logout() }> logout
                     </button>
 
-                    <button onClick={() => handleNavigate('/orders')} id="cartButton">
-                        <img src={menuImg} className="mx-5 h-10" />
-                    </button>
-                </div>
+                <button onClick={() => handleNavigate('/cart')} id="cartButton">
+                    <img src={cartImg} className="mx-5 h-10" />
+                </button>
+
+                <button onClick={() => handleNavigate('/orders')} id="cartButton">
+                    <img src={menuImg} className="mx-5 h-10" />
+                </button>
             </div>
+        </div>
 
-            {/* dropdown */}
+            {/* dropdown */ }
             <div className="flex justify-end mr-3">
                 <AdminProductDropDown
                     selected={sortChoice}
@@ -109,7 +121,7 @@ function UserProducts() {
                     ))
                 }
             </div>
-        </div>
+        </div >
     );
 }
 
