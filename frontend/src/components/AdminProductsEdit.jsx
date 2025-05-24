@@ -1,5 +1,3 @@
-import React from 'react';
-
 function AdminProductsEdit({ product, updatedQty, updatedPrice, onQtyChange, onPriceChange, onCancel, onSave }) {
   if (!product) return null;
 

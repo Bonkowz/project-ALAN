@@ -1,6 +1,4 @@
 // components/AdminSalesRangeButton.jsx
-import React from 'react';
-
 const AdminSalesRangeButton = ({ label, active, onClick }) => {
   return (
     <button

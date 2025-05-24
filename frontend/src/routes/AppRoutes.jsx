@@ -1,10 +1,11 @@
-import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { UserContextProvider } from '../context/userContext';
-import ProtectedRoute from '../utils/ProtectedRoute'; 
+import ProtectedRoute from './ProtectedRoute'; 
 
+// Import public pages
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
+import Unauthorized from '../pages/Unauthorized';
 
 // Import user pages
 import UserProducts from '../pages/user/userProducts';
@@ -19,7 +20,6 @@ import AdminOrderFulfillment from '../pages/admin/adminOrderFulfillment';
 import AdminSales from '../pages/admin/adminSales';
 import Landing from '../pages/Landing';
 
-// TODO: add isUserSignedIn to relevant paths
 
 const AppRoutes = () => {
 
@@ -31,6 +31,7 @@ const AppRoutes = () => {
             <Route path="/" element={<Landing />} />
             <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/unauthorized" element={<Unauthorized />} />
 
           {/* User routes */}
           <Route element={<ProtectedRoute allowedRoles={['customer']} />}>

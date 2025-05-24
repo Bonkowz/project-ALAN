@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChevronDown, ArrowUp, ArrowDown } from 'lucide-react';
 
 function AdminProductDropDown({ selected, onSelect, sortOrder, onToggleOrder }) {
