@@ -114,19 +114,23 @@ export const getAllTransactionsCart = async (req, res) => {
 // https://www.geeksforgeeks.org/mongoose-aggregate-aggregate-api/
 export const getFilteredTransactionsMerged = async (req, res) => {
   try {
-    // Parse the orderStatus from the query parameters
     const statusFilter = parseInt(req.query.orderStatus);
 
     if (isNaN(statusFilter)) {
       return res.status(400).json({ error: 'Invalid or missing orderStatus parameter' });
     }
 
+    
+    const matchStage = { orderStatus: statusFilter };
+
+    // Only add email filter if it is present in query (For user)
+    if (req.query.email) {
+      matchStage.email = req.query.email;
+    }
+
     const transactions = await Transaction.aggregate([
       {
-        $match: {
-          orderStatus: statusFilter,
-          email: req.query.email
-        } // Filter by orderStatus and email
+        $match: matchStage
       },
       {
         $lookup: {
@@ -166,6 +170,7 @@ export const getFilteredTransactionsMerged = async (req, res) => {
   }
 };
 
+
 export const getFilteredTransactionsMergedByDate = async (req, res) => {
   const { orderStatus, range } = req.query;
 
@@ -203,7 +208,6 @@ export const getFilteredTransactionsMergedByDate = async (req, res) => {
     return `${year}-${month}-${day}`;
   };
   const formattedStartDate = formatDate(startDate);
-  console.log("Filtering from:", formattedStartDate);
 
   try {
     const transactions = await Transaction.aggregate([
@@ -235,6 +239,7 @@ export const getFilteredTransactionsMergedByDate = async (req, res) => {
           orderProductPrice: 1,
 
           productId: '$productData._id',
+          productImg: '$productData.productImg',
           productName: '$productData.productName',
           productType: '$productData.productType',
           productQty: '$productData.productQty',

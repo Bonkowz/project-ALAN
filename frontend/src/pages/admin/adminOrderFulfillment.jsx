@@ -53,7 +53,7 @@ function AdminOrderFulfillment() {
 
       // 3. Remove confirmed order from view
       fetchData();
-      //setMergedOrders(prev => prev.filter(order => order._id !== transactionId));
+
     } catch (err) {
       console.error("Error confirming order:", err);
     }
