@@ -149,16 +149,6 @@ const Signup = () => {
           </form>
         </div>
       </div>
-
-      {/* Existing navigation button - Kept as is and positioned below the main content */}
-      <div className="mt-8">
-        <button
-          onClick={() => handleNavigate('/products')}
-          className="px-6 py-2 border border-blue-500 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition"
-        >
-          Go to Products
-        </button>
-      </div>
     </div>
   );
 };
