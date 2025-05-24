@@ -57,7 +57,10 @@ const Signin = () => {
         navigate('/');
       }
       window.location.reload();
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
     } catch (error) {
       console.log('Login Error', error)
     }
