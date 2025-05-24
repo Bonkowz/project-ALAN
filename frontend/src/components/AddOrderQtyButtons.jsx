@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React from 'react';
 
 function AddOrderQtyButton({ orderQty, increaseOrder, decreaseOrder }) {
@@ -10,21 +9,10 @@ function AddOrderQtyButton({ orderQty, increaseOrder, decreaseOrder }) {
                 onClick={decreaseOrder}
                 id="addToCartButton"
             >
-=======
-import React from 'react'
-
-function AddOrderQtyButtons({ data, increaseOrder, decreaseOrder }) {
-    return (
-        <div>
-            {/* minus box */}
-            <button className="w-10 h-10 bg-[#606C38] text-[#FEFAE0] rounded-[5px]"
-                onClick={() => increaseOrder()}>
->>>>>>> main
                 -
             </button>
 
             {/* qty box */}
-<<<<<<< HEAD
             <div className="w-10 h-10 border flex items-center justify-center font-serif">
                 {orderQty}
             </div>
@@ -42,19 +30,3 @@ function AddOrderQtyButtons({ data, increaseOrder, decreaseOrder }) {
 }
 
 export default AddOrderQtyButton;
-=======
-            <div className="w-10 h-10 text-[#FEFAE0] rounded-[5px]">
-                {data.orderQty}
-            </div>
-
-            {/* plus box */}
-            <button className="w-10 h-10 bg-[#606C38] text-[#FEFAE0] rounded-[5px]"
-                onClick={() => decreaseOrder()}>
-                +
-            </button>
-        </div>
-    )
-}
-
-export default AddCartQty
->>>>>>> main
