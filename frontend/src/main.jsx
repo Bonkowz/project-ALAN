@@ -5,6 +5,9 @@ import App from './App.jsx'
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 
+// TODO: add signout stuff
+// TODO: add route pages
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <App />

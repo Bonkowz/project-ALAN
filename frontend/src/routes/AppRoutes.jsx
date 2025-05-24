@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { UserContextProvider } from '../context/userContext';
-import ProtectedRoute from '../utils/ProtectedRoute'; 
+import ProtectedRoute from './ProtectedRoute'; 
 
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
@@ -17,8 +17,6 @@ import AdminProducts from '../pages/admin/adminProducts';
 import AdminOrderFulfillment from '../pages/admin/adminOrderFulfillment';
 import AdminSales from '../pages/admin/adminSales';
 import Landing from '../pages/Landing';
-
-// TODO: add isUserSignedIn to relevant paths
 
 const AppRoutes = () => {
 

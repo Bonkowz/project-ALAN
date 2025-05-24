@@ -28,7 +28,6 @@ export const addTransaction = async (req, res) => {
     // Use the product's current price 
     const orderProductPrice = product.productPrice;
 
-    // TODO: Fix add transaction logic for existing product id's
     var result = await Transaction.updateOne(
       { productId: new ObjectId(req.body.productId), email: req.body.email, orderStatus: 3 },
       { $inc: { orderQty: 1 } }

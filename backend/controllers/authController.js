@@ -32,7 +32,6 @@ export const registerAdmin = async (req, res) => {
 }
 
 // TODO: add so that it works with name 
-// TODO: add distinction for admin vs customer
 export const login = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });

@@ -1,17 +1,13 @@
 
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { UserContext } from '../context/userContext';
+import axios from 'axios';
 // Assuming you have an image for the sign-in page header, replace with actual path
 // import signInHeaderImg from "../assets/images/signin-header.png";
 
-
 // TODO: fix design of page
 // TODO: add regex, required, hints, for fields
-// TODO: make successful login not a alert
-// TODO: add signout stuff
-
 
 const Signin = () => {
   const { user, loading } = useContext(UserContext);
