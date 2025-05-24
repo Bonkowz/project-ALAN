@@ -1,14 +1,13 @@
 import React from 'react';
-import chickenBreastImg from "../assets/images/chicken_breast.jpg";
 import '../index.css';
 
 function AdminProductCard({ data, onEdit }) {
     return (
         <div
             id="adminProductCard"
-            className="w-[220px] bg-[#FEFAE0] rounded-b-[16px] overflow-hidden m-2 shadow-sm"
+            className="w-[220px] bg-white rounded-b-[16px] overflow-hidden m-2 shadow-sm"
         >
-            <img src={chickenBreastImg} className="w-full h-[120px] object-cover" />
+            <img src={data.productImg} className="w-full h-[120px] object-cover" />
             <div className="p-2">
                 <p className="text-lg font-serif font-bold mb-1 truncate">{data.productName}</p>
 

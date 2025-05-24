@@ -8,20 +8,23 @@ button:hover {
   padding: 2rem;
   text-align: center;
 } */
-
+#logoButton,
 #cartButton,
 #addToCartButton {
   transition: transform 0.2s ease;
 }
 
+#logoButton:hover,
 #cartButton:hover {
   transform: translateY(-4px);
 }
 
+#confirmButton:hover,
 #addToCartButton:hover {
   transform: scale(1.03);
 }
 
+#confirmButton:active,
 #addToCartButton:active {
   transform: scale(0.97);
 }
@@ -39,6 +42,17 @@ button:hover {
 
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+.productsSection::-webkit-scrollbar,
+.salesSection::-webkit-scrollbar {
+  display: none; 
+}
+
+.productSection,
+.salesSection {
+  -ms-overflow-style: none;  
+  scrollbar-width: none;  
 }
 
 @keyframes logo-spin {

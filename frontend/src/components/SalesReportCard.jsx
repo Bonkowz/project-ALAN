@@ -1,5 +1,4 @@
 import React from 'react';
-import chickenBreastImg from "../assets/images/chicken_breast.jpg";
 import '../index.css';
 
 function SalesReportCard({ data, transactions = [] }) {
@@ -19,7 +18,7 @@ function SalesReportCard({ data, transactions = [] }) {
                     {/* Image */}
                     <div className="w-1/5 flex-shrink-0">
                         <img
-                            src={chickenBreastImg}
+                            src={data.productImg}
                             alt="product"
                             className="w-16 h-16 object-cover rounded-[15px]"
                         />

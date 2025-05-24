@@ -1,4 +1,5 @@
 import User from '../models/User.js';
+import Transaction from '../models/Transaction.js';
 import { ObjectId } from 'mongodb';
 
 // Create // POST REQUEST
@@ -38,6 +39,60 @@ export const getAllCustomers = async (req, res) => {
     res.status(200).json(users);
   } catch (err) {
     res.status(500).json({error: 'Failed to fetch users' });
+  }
+};
+
+export const getCustomerTransactions = async (req, res) => {
+  try {
+    const customers = await User.aggregate([
+      {
+        $match: { userType: 'customer' } // Get only customers
+      },
+      {
+        $lookup: {
+          from: 'transaction',
+          localField: 'email',
+          foreignField: 'email',
+          as: 'transactions'
+        }
+      },
+      {
+        $addFields: {
+          totalSpent: {
+            $sum: {
+              $map: {
+                input: {
+                  $filter: {
+                    input: '$transactions',
+                    as: 't',
+                    cond: { $eq: ['$$t.orderStatus', 1] } // Only completed transactions
+                  }
+                },
+                as: 'completedTransaction',
+                in: {
+                  $multiply: [
+                    '$$completedTransaction.orderQty',
+                    '$$completedTransaction.orderProductPrice'
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          email: 1,
+          totalSpent: 1
+        }
+      }
+    ]);
+
+    res.status(200).json(customers);
+  } catch (err) {
+    console.error("Error in getCustomerTransactions:", err);
+    res.status(500).json({ error: "Failed to fetch customer transactions" });
   }
 };
 

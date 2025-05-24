@@ -17,7 +17,7 @@ function AdminDashboard() {
   const {user} = useContext(UserContext);
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-white min-h-screen">
       <DashboardHeader />
 
       {/* Greeting */}

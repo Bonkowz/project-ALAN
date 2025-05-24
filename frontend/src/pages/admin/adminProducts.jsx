@@ -17,7 +17,6 @@ function AdminProducts() {
     fetchProducts();
   }, [sortChoice, sortOrder]);
 
-  // Fetch products with the current sorting configuration
   const fetchProducts = () => {
     const endpoint = `http://localhost:5000/product/get-all-products-sorted?sortBy=${sortChoice}&order=${sortOrder}`;
 
@@ -61,9 +60,9 @@ function AdminProducts() {
   };
 
   return (
-    <div>
+    <div className="bg-[#FEFAE0] min-h-screen flex flex-col">
       <AdminProductHeader />
-      <div className="flex justify-end px-6 mt-2">
+      <div className="flex justify-end px-6 mt-2 max-w-6xl mx-auto w-full">
         <AdminProductDropDown
           selected={sortChoice}
           onSelect={setSortChoice}
@@ -72,8 +71,7 @@ function AdminProducts() {
         />
       </div>
 
-
-      <div className="flex flex-wrap gap-4 justify-center items-center mt-4">
+      <div className="productSection flex-grow max-h-[60vh] overflow-y-auto p-4 flex flex-wrap gap-4 justify-center items-center max-w-6xl mx-auto mt-4">
         {products.map((product) => (
           <AdminProductCard
             key={product._id}
