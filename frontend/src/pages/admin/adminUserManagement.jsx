@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import UserManagementCard from '../../components/UserManagementCard';
 import UserManagementHeader from '../../components/UserManagementHeader';
 import UserManagementLabel from '../../components/UserManagementLabel';

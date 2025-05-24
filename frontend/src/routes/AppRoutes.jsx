@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { UserContextProvider } from '../context/userContext';
 import ProtectedRoute from '../utils/ProtectedRoute'; 

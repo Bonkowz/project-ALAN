@@ -1,4 +1,3 @@
-import React from 'react';
 import chickenBreastImg from "../assets/images/chicken_breast.jpg";
 import '../index.css';
 

@@ -1,6 +1,5 @@
 import Transaction from '../models/Transaction.js';
 import Product from '../models/Product.js';
-import mongoose from 'mongoose';
 import { ObjectId } from 'mongodb';
 
 // NOTE: POST

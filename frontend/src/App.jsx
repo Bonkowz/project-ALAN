@@ -1,4 +1,3 @@
-
 // import { useEffect, useState } from 'react';
 // import UserProducts from './components/UserProducts';
 
@@ -15,7 +14,6 @@
 //     <div>
 //       <UserProducts data={products}></UserProducts>
 
-import React from 'react'; 
 import AppRoutes from './routes/AppRoutes'; 
 import './App.css';
 

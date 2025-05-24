@@ -1,4 +1,3 @@
-import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import logoImg from "../assets/images/logo_placeholder.png";
 import cartImg from '../assets/images/shopping_cart.png'
