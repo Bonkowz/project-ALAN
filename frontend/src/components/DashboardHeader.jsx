@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import logoImg from "../assets/images/logo_placeholder.png";
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function DashboardHeader() {
