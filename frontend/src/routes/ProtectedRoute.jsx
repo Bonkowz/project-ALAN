@@ -2,8 +2,6 @@ import { useContext } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { UserContext } from '../context/userContext';
 
-// TODO: reroute unauthorized to 401 page
-
 const ProtectedRoute = ({ allowedRoles }) => {
   const { user, loading } = useContext(UserContext);
   if (loading) {

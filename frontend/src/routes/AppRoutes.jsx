@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { UserContextProvider } from '../context/userContext';
 import ProtectedRoute from './ProtectedRoute'; 
 
+// Import public pages
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
 import Unauthorized from '../pages/Unauthorized';

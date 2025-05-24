@@ -79,11 +79,13 @@ const Signin = () => {
           {/* Email Input */}
           <div className="mb-4">
             <input
-              type="text"
+              // type="email"
+              type = "text"
               placeholder="enter email"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#606C38] bg-gray-200"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
 
@@ -95,6 +97,7 @@ const Signin = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#606C38] bg-gray-200"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
 

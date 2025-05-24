@@ -31,7 +31,6 @@ export const registerAdmin = async (req, res) => {
     }
 }
 
-// TODO: add so that it works with name 
 export const login = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -52,15 +51,15 @@ export const login = async (req, res) => {
                 userType: user.userType
             },
             process.env.SECRET_KEY,
-            { expiresIn: '1hr' },
+            { expiresIn: '1hr' }, // NOTE: cookies dies after 1hr
             (err, token) => {
                 if (err) throw err;
                 res
                     .status(200)
                     .cookie('token', token, {
-                        // httpOnly: true,
-                        // secure: true,
-                        // sameSite: 'None',
+                        httpOnly: true,
+                        secure: true,
+                        sameSite: 'None',
                     }, (err))
                     .json(user)
             }
@@ -83,7 +82,8 @@ export const getProfile = async (req, res) => {
     }
 }
 
+// NOTE: proper handling breaks other code 
 export const logout = async (req, res) => {
-    res.clearCookie("token");
+    res.clearCookie("token", { httpOnly: true, sameSite: 'None', secure: true });
     res.status(200).json({ success: true, message: "Logged out successfully" });
 };
