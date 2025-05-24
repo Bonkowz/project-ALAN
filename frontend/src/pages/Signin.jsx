@@ -120,22 +120,6 @@ const Signin = () => {
           </span>
         </p>
       </div>
-
-      {/* Existing navigation buttons */}
-      <div className="flex gap-4 mt-8">
-        <button
-          onClick={() => handleNavigate('/admin/dashboard')}
-          className="px-6 py-2 border border-blue-500 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition"
-        >
-          Go to Dashboard
-        </button>
-        <button
-          onClick={() => handleNavigate('/products')}
-          className="px-6 py-2 border border-blue-500 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition"
-        >
-          Go to Products
-        </button>
-      </div>
     </div>
   );
 };
