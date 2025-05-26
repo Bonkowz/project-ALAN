@@ -51,7 +51,7 @@ export const login = async (req, res) => {
                 userType: user.userType
             },
             process.env.SECRET_KEY,
-            { expiresIn: '1hr' }, // NOTE: cookies dies after 1hr
+            {}, 
             (err, token) => {
                 if (err) throw err;
                 res
