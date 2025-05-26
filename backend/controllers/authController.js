@@ -32,7 +32,8 @@ export const registerAdmin = async (req, res) => {
 }
 
 export const login = async (req, res) => {
-    const { email, password } = req.body;
+    const email = req.body.email ? req.body.email.trim() : "";
+    const { password } = req.body;
     const user = await User.findOne({ email });
     try {
         if (!user) {

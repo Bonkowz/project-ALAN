@@ -22,7 +22,7 @@ function AdminDashboard() {
 
       {/* Greeting */}
       <div className="text-left ml-4 mt-4">
-        <p className="text-4xl font-bold text-black">Hello, Admin {user.firstName}</p>
+        <p className="text-4xl font-bold text-black">Hello, Admin {user.firstName}.</p>
         <p className="text-lg font-semibold text-black">Have a Good Day!</p>
       </div>
 
