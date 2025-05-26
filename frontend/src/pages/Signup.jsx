@@ -38,7 +38,7 @@ const Signup = () => {
     axios
       .post('http://localhost:5000/auth/register', { email, firstName, middleName, lastName, password })
       .then(() => {
-        alert('Registration Successful')
+        // alert('Registration Successful')
         // resets fields
         setEmail('')
         setFirstName('')
@@ -50,6 +50,7 @@ const Signup = () => {
         navigate('/signin')
       })
       .catch((error) => {
+        alert('Unable to register user')
         console.log('Unable to register user')
       });
   }

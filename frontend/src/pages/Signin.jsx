@@ -54,6 +54,7 @@ const Signin = () => {
       }
       window.location.reload();
     } catch (error) {
+      alert('Incorrect credentials')
       console.log('Login Error', error)
     }
   }
