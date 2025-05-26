@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import CartHeader from '../../components/CartHeader'
 import CartCard from '../../components/CartCard'
 import { UserContext } from '../../context/userContext';
+import { toast } from 'react-hot-toast';
 
 function UserCart() {
     const [selected, setSelected] = useState([]);
@@ -84,6 +85,7 @@ function UserCart() {
             if (response.ok) {
                 console.log(result.message);
                 setMergedOrders(prev => prev.filter(item => item._id !== transactionId));
+                toast("Deleted item.");
             } else {
                 console.error('Error:', result.error);
             }
@@ -114,6 +116,7 @@ function UserCart() {
 
             setMergedOrders(prev => prev.filter(item => !selected.includes(item._id)));
             setSelected([]);
+            toast("Deleted item.");
         } catch (error) {
             console.error('Network error:', error);
         }
@@ -141,6 +144,7 @@ function UserCart() {
 
             setMergedOrders(prev => prev.filter(item => !selected.includes(item._id)));
             setSelected([]);
+            toast("Checked out items!");
         } catch (error) {
             console.error('Network error:', error);
         }

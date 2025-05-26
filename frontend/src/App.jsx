@@ -14,15 +14,17 @@
 //     <div>
 //       <UserProducts data={products}></UserProducts>
 
-import AppRoutes from './routes/AppRoutes'; 
+import AppRoutes from './routes/AppRoutes';
 import './App.css';
+import { Toaster } from 'react-hot-toast';
 
 const App = () => {
-  return(
-    <div> 
-      <AppRoutes /> 
+  return (
+    <div>
+      <Toaster position='top-center' toastOptions={{ duration: 2000 }} />
+      <AppRoutes />
     </div>
   )
-}; 
+};
 
 export default App; 

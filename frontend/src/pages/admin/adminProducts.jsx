@@ -3,6 +3,7 @@ import AdminProductCard from '../../components/AdminProductCard';
 import AdminProductHeader from '../../components/AdminProductHeader';
 import AdminProductDropDown from '../../components/AdminProductDropDown';
 import AdminProductsEdit from '../../components/AdminProductsEdit';
+import { toast } from 'react-hot-toast';
 
 function AdminProducts() {
   const [products, setProducts] = useState([]);
@@ -54,6 +55,7 @@ function AdminProducts() {
 
       closeModal();
       fetchProducts();
+      toast("Edited product.");
     } catch (err) {
       console.error("Error updating product:", err);
     }

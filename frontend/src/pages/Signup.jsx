@@ -31,7 +31,7 @@ const Signup = () => {
   }
 
   const handleSubmit = (event) => {
-    event.preventDefault(); 
+    event.preventDefault();
     axios
       .post('http://localhost:5000/auth/register', { email, firstName, middleName, lastName, password })
       .then(() => {
@@ -48,6 +48,7 @@ const Signup = () => {
       })
       .catch((error) => {
         console.log('Unable to register user')
+        toast.error("Unable to register user.");
       });
   }
 
@@ -56,9 +57,9 @@ const Signup = () => {
       <div className="w-full max-w-6xl bg-white rounded-[48px] flex flex-col p-8 shadow-none border-0 min-h-[750px] relative">
         {/* Logo at top left */}
         <div className="absolute top-8 left-8 flex items-center gap-3">
-          <img 
-            src={logoImg} 
-            alt="Logo" 
+          <img
+            src={logoImg}
+            alt="Logo"
             className="w-25 h-25 object-contain"
           />
         </div>
