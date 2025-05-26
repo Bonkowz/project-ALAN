@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import CartHeader from '../../components/CartHeader';
 import OrderCard from '../../components/OrderCard';
 import { UserContext } from '../../context/userContext';
+import { toast } from 'react-hot-toast';
 
 const UserOrders = () => {
   const [orderItems, setOrderITems] = useState([]);
@@ -51,6 +52,7 @@ const UserOrders = () => {
             item._id === id ? { ...item, orderStatus: 2 } : item
           )
         );
+        toast("Cancelled order.");
       } else {
         console.error('Error:', result.error);
       }

@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/userContext';
 import axios from 'axios';
 import logoImg from "../assets/images/logo_placeholder.png";
-import signinHeaderImg from "../assets/images/signInHeader.jpg"; 
+import signinHeaderImg from "../assets/images/signInheader.jpg";
+import { toast } from 'react-hot-toast';
 
 // TODO: fix design of page
 
@@ -41,6 +42,7 @@ const Signin = () => {
       setEmail('')
       setPassword('')
       fetchUsers();
+
       localStorage.setItem('token', token)
       if (loggedInUserType === 'administrator') {
         navigate('/admin/dashboard');
@@ -50,8 +52,14 @@ const Signin = () => {
         navigate('/');
       }
       window.location.reload();
+
     } catch (error) {
-      console.log('Login Error', error)
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error("Login failed. Please try again.");
+      } else {
+        toast.error("An unexpected error occurred.");
+      }
+      console.error("Login Error:", error);
     }
   }
 
@@ -63,9 +71,9 @@ const Signin = () => {
           <div className="relative w-[calc(100%+140px)] h-56 rounded-[9999px] mt-10 overflow-hidden -mx-[70px]">
             {/* Background Image */}
             <div className="absolute inset-0">
-              <img 
-                src={signinHeaderImg} 
-                alt="Sign In Header" 
+              <img
+                src={signinHeaderImg}
+                alt="Sign In Header"
                 className="w-full h-full object-cover"
               />
             </div>

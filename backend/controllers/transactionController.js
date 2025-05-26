@@ -120,7 +120,7 @@ export const getFilteredTransactionsMerged = async (req, res) => {
       return res.status(400).json({ error: 'Invalid or missing orderStatus parameter' });
     }
 
-    
+
     const matchStage = { orderStatus: statusFilter };
 
     // Only add email filter if it is present in query (For user)
