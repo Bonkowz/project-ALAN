@@ -2,8 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import landingImg from "../assets/images/landing.png";
 import logoImg from "../assets/images/logo_placeholder.png";
 
-// TODO: furnish design of page
-
 const Landing = () => {
   const navigate = useNavigate();
 
