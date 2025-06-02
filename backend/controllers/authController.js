@@ -77,8 +77,6 @@ export const login = async (req, res) => {
           .cookie("token", token, {
             httpOnly: true,
             secure: true,
-            sameSite: "None",
-            partitioned: true,
           })
           .json(user);
       }
@@ -105,9 +103,7 @@ export const getProfile = async (req, res) => {
 export const logout = async (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
-    sameSite: "None",
     secure: true,
-    partitioned: true,
   });
   res.status(200).json({ success: true, message: "Logged out successfully" });
 };
