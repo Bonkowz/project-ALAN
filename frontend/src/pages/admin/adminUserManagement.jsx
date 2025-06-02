@@ -7,7 +7,7 @@ function AdminUserManagement() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/user/get-customer-transactions')
+    fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/user/get-customer-transactions`)
       .then(res => res.json())
       .then(data => setUsers(data))
       .catch(err => console.error("Error fetching users:", err));

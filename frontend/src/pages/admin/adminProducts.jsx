@@ -19,7 +19,7 @@ function AdminProducts() {
   }, [sortChoice, sortOrder]);
 
   const fetchProducts = () => {
-    const endpoint = `http://localhost:5000/product/get-all-products-sorted?sortBy=${sortChoice}&order=${sortOrder}`;
+    const endpoint = `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/product/get-all-products-sorted?sortBy=${sortChoice}&order=${sortOrder}`;
 
     fetch(endpoint)
       .then(res => res.json())
@@ -41,7 +41,7 @@ function AdminProducts() {
 
   const handleSave = async () => {
     try {
-      await fetch('http://localhost:5000/product/update-product', {
+      await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/product/update-product`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

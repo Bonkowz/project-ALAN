@@ -12,7 +12,7 @@ function DashboardHeader() {
 
     const logout = async () => {
         console.log("test");
-        await axios.post('http://localhost:5000/auth/logout');
+        await axios.post(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/auth/logout`);
         handleNavigate('/signin');
         window.location.reload();
     }

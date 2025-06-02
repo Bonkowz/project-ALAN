@@ -26,7 +26,7 @@ const Signin = () => {
 
   const fetchUsers = () => {
     axios
-      .get('http://localhost:5000/user/get-all-customers')
+      .get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/user/get-all-customers`)
       .then((res) => {
         console.log(res.data)
       });
@@ -35,7 +35,7 @@ const Signin = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/auth/login', { email, password })
+      const response = await axios.post(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/auth/login`, { email, password })
       const token = response.data.token
 
       const loggedInUserType = response.data.userType;

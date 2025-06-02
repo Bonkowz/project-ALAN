@@ -11,7 +11,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/auth': {
-        target: 'http://localhost:5000', 
+        target: `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}`, 
         changeOrigin: true, 
       },
     },

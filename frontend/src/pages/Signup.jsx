@@ -24,7 +24,7 @@ const Signup = () => {
 
   const fetchUsers = () => {
     axios
-      .get('http://localhost:5000/user/get-all-customers')
+      .get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/user/get-all-customers`)
       .then((res) => {
         console.log(res.data)
       });
@@ -33,7 +33,7 @@ const Signup = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .post('http://localhost:5000/auth/register', { email, firstName, middleName, lastName, password })
+      .post(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/auth/register`, { email, firstName, middleName, lastName, password })
       .then(() => {
         // alert('Registration Successful')
         // resets fields

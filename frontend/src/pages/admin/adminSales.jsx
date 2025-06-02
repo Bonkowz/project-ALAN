@@ -21,11 +21,11 @@ function AdminSales() {
   const fetchData = () => {
     const transactionsUrl =
       activeRange === 'All'
-        ? `http://localhost:5000/transaction/get-filtered-transactions-merged?orderStatus=1`
-        : `http://localhost:5000/transaction/get-filtered-transactions-merged-date?orderStatus=1&range=${activeRange}`;
+        ? `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/transaction/get-filtered-transactions-merged?orderStatus=1`
+        : `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/transaction/get-filtered-transactions-merged-date?orderStatus=1&range=${activeRange}`;
 
     Promise.all([
-      fetch(`http://localhost:5000/product/get-all-products`).then(res => res.json()),
+      fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/product/get-all-products`).then(res => res.json()),
       fetch(transactionsUrl).then(res => res.json())
     ])
       .then(([productsData, transactionsData]) => {

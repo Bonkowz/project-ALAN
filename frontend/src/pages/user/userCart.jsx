@@ -16,7 +16,7 @@ function UserCart() {
     }, []);
 
     const fetchData = () => {
-        fetch(`http://localhost:5000/transaction/get-filtered-transactions-merged?orderStatus=3&email=${user.email}`)
+        fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/transaction/get-filtered-transactions-merged?orderStatus=3&email=${user.email}`)
             .then(res => res.json())
             .then(data => {
                 setMergedOrders(data);
@@ -73,7 +73,7 @@ function UserCart() {
     // for deleting checked transactions from the database.
     async function deleteItem(transactionId) {
         try {
-            const response = await fetch('http://localhost:5000/transaction/remove-transaction', {
+            const response = await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/transaction/remove-transaction`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -99,7 +99,7 @@ function UserCart() {
         try {
             const response = await Promise.all(
                 selected.map(id =>
-                    fetch('http://localhost:5000/transaction/remove-transaction', {
+                    fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/transaction/remove-transaction`, {
                         method: 'DELETE',
                         headers: {
                             'Content-Type': 'application/json',
@@ -126,7 +126,7 @@ function UserCart() {
     async function checkOut() {
         try {
             const updatePromises = selected.map(id =>
-                fetch('http://localhost:5000/transaction/update-transaction', {
+                fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/transaction/update-transaction`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
@@ -160,7 +160,7 @@ function UserCart() {
             )
         );
 
-        fetch('http://localhost:5000/transaction/update-transaction', {
+        fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/transaction/update-transaction`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id, orderQty: mergedOrders.find(o => o._id === id).orderQty + 1 }),
@@ -179,7 +179,7 @@ function UserCart() {
 
         const order = mergedOrders.find(o => o._id === id);
         if (order.orderQty > 1) {
-            fetch('http://localhost:5000/transaction/update-transaction', {
+            fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/transaction/update-transaction`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id, orderQty: order.orderQty - 1 }),

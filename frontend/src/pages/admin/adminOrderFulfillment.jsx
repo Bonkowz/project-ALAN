@@ -12,7 +12,7 @@ function AdminOrderFulfillment() {
   }, []);
 
   const fetchData = () => {
-    fetch('http://localhost:5000/transaction/get-filtered-transactions-merged?orderStatus=0')
+    fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/transaction/get-filtered-transactions-merged?orderStatus=0`)
       .then(res => res.json())
       .then(data => {
         setMergedOrders(data);
@@ -33,7 +33,7 @@ function AdminOrderFulfillment() {
     try {
       console.log('Updating transaction:', transactionId);
       // 1. Update transaction status
-      await fetch('http://localhost:5000/transaction/update-transaction', {
+      await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/transaction/update-transaction`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ function AdminOrderFulfillment() {
 
       // 2. Update product stock
       const updatedStock = currentStock - orderQty;
-      await fetch(`http://localhost:5000/product/update-product`, {
+      await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/product/update-product`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

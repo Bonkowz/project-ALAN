@@ -12,9 +12,9 @@ const UserOrders = () => {
     async function fetchAllOrders() {
       try {
         const [pendingRes, canceledRes, completedRes] = await Promise.all([
-          fetch(`http://localhost:5000/transaction/get-filtered-transactions-merged?orderStatus=0&email=${user.email}`),
-          fetch(`http://localhost:5000/transaction/get-filtered-transactions-merged?orderStatus=1&email=${user.email}`),
-          fetch(`http://localhost:5000/transaction/get-filtered-transactions-merged?orderStatus=2&email=${user.email}`),
+          fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/transaction/get-filtered-transactions-merged?orderStatus=0&email=${user.email}`),
+          fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/transaction/get-filtered-transactions-merged?orderStatus=1&email=${user.email}`),
+          fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/transaction/get-filtered-transactions-merged?orderStatus=2&email=${user.email}`),
         ]);
 
         const [pending, cancelled, completed] = await Promise.all([
@@ -36,7 +36,7 @@ const UserOrders = () => {
 
   async function cancelOrder(id) {
     try {
-      const response = await fetch('http://localhost:5000/transaction/update-transaction', {
+      const response = await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/transaction/update-transaction`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
