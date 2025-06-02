@@ -35,7 +35,11 @@ const Signin = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/auth/login`, { email, password })
+      const response = await axios.post(
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/auth/login`, 
+        { email, password }, 
+        {withCredentials: true}
+      )
       const token = response.data.token
 
       const loggedInUserType = response.data.userType;
