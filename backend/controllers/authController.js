@@ -68,7 +68,10 @@ export const login = async (req, res) => {
       process.env.SECRET_KEY,
       {},
       (err, token) => {
-        if (err) throw err;
+        if (err) {
+          console.error("JWT signing error:", err);
+          return res.status(500).json({ error: "Error creating token" });
+        }
         res
           .status(200)
           .cookie("token", token, {
