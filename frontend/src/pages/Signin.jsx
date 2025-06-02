@@ -1,17 +1,16 @@
-
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/userContext';
 import axios from 'axios';
-// Assuming you have an image for the sign-in page header, replace with actual path
-// import signInHeaderImg from "../assets/images/signin-header.png";
+import logoImg from "../assets/images/logo_placeholder.png";
+import signinHeaderImg from "../assets/images/signInheader.jpg";
+import { toast } from 'react-hot-toast';
 
 // TODO: fix design of page
-// TODO: add regex, required, hints, for fields, special characters not allowed 
 
 const Signin = () => {
   const { user, loading } = useContext(UserContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleNavigate = (path) => {
     navigate(path);
@@ -40,10 +39,10 @@ const Signin = () => {
       const token = response.data.token
 
       const loggedInUserType = response.data.userType;
-      // alert('Login successful')
       setEmail('')
       setPassword('')
       fetchUsers();
+
       localStorage.setItem('token', token)
       if (loggedInUserType === 'administrator') {
         navigate('/admin/dashboard');
@@ -53,73 +52,77 @@ const Signin = () => {
         navigate('/');
       }
       window.location.reload();
+
     } catch (error) {
-      alert('Incorrect credentials')
-      console.log('Login Error', error)
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error("Login failed. Please try again.");
+      } else {
+        toast.error("An unexpected error occurred.");
+      }
+      console.error("Login Error:", error);
     }
   }
 
   return (
-    // Use a similar background color and center the content
-    <div className="flex flex-col items-center justify-center min-h-screen bg-[#FEFAE0] text-gray-800 px-4">
-      {/* Container for the sign-in form */}
-      <div className="bg-white p-8 rounded-[25px] shadow-md w-full max-w-sm">
-        {/* Image placeholder - replace with your actual image component or tag */}
-        {/* If using an image file: <img src={signInHeaderImg} alt="Project ALAN" className="rounded-[25px] w-full object-cover mb-6"/> */}
-        {/* Placeholder div with background color and rounded corners */}
-        <div className="bg-[#DDA15E] h-32 rounded-[25px] mb-6 flex items-center justify-center">
-          {/* You can add text or an icon here if needed */}
-          <p className="text-[#FEFAE0] text-2xl font-serif">Project <i>ALAN</i></p>
+    <div className="min-h-screen bg-[#FEFAE0] flex items-center justify-center">
+      <div className="w-full max-w-6xl bg-white rounded-[48px] flex flex-col items-center justify-center p-0 shadow-none border-0 min-h-[750px]">
+        <div className="w-full max-w-2xl mx-auto flex flex-col items-center justify-center">
+          {/* Header pill shape */}
+          <div className="relative w-[calc(100%+140px)] h-56 rounded-[9999px] mt-10 overflow-hidden -mx-[70px]">
+            {/* Background Image */}
+            <div className="absolute inset-0">
+              <img
+                src={signinHeaderImg}
+                alt="Sign In Header"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            {/* Logo and Title */}
+            <div className="relative z-10 h-full flex flex-col items-center justify-center">
+              <img src={logoImg} alt="Logo" className="w-40 h-40 object-contain drop-shadow-lg" />
+            </div>
+          </div>
+          {/* Form Card */}
+          <div className="w-full flex flex-col items-center justify-center px-8 py-10">
+            <form onSubmit={handleLogin} className="w-full flex flex-col gap-6 items-center justify-center">
+              {/* Email Input */}
+              <input
+                type="text"
+                placeholder="enter email"
+                className="w-full px-5 py-3 border-2 border-[#606C38] rounded-[16px] bg-[#E9EDC9] text-lg font-serif focus:outline-none focus:ring-2 focus:ring-[#606C38]"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              {/* Password Input */}
+              <input
+                type="password"
+                placeholder="enter password"
+                className="w-full px-5 py-3 border-2 border-[#606C38] rounded-[16px] bg-[#E9EDC9] text-lg font-serif focus:outline-none focus:ring-2 focus:ring-[#606C38]"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              {/* Login Button */}
+              <button
+                className="w-full bg-[#606C38] text-[#FEFAE0] py-3 rounded-[16px] text-xl font-bold font-serif hover:bg-[#7a8646] transition duration-200"
+                type='submit'
+              >
+                log in
+              </button>
+            </form>
+            {/* Sign Up Link */}
+            <p className="text-center text-xl mt-10 font-serif text-[#38471C]">
+              Don't have an account yet?{' '}
+              <span
+                className="text-[#BC6C25] hover:underline cursor-pointer font-semibold"
+                onClick={() => handleNavigate('/signup')}
+              >
+                Sign up
+              </span>
+            </p>
+          </div>
         </div>
-
-
-        <h1 className="text-2xl font-bold text-center mb-6">Log In</h1>
-        <form
-          onSubmit={handleLogin}
-        >
-          {/* Email Input */}
-          <div className="mb-4">
-            <input
-              // type="email"
-              type = "text"
-              placeholder="enter email"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#606C38] bg-gray-200"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-
-          {/* Password Input */}
-          <div className="mb-6">
-            <input
-              type="password"
-              placeholder="enter password"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#606C38] bg-gray-200"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-
-          {/* Login Button */}
-          <button
-            className="w-full bg-[#606C38] text-[#FEFAE0] py-2 rounded-md hover:bg-[#7a8646] transition duration-200"
-            type='submit'
-          >
-            log in
-          </button>
-        </form>
-        {/* Sign Up Link */}
-        <p className="text-center text-sm mt-4">
-          Don't have an account yet?{' '}
-          <span
-            className="text-[#BC6C25] hover:underline cursor-pointer"
-            onClick={() => handleNavigate('/signup')}
-          >
-            Sign up
-          </span>
-        </p>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import OrderFulfillmentCard from '../../components/OrderFulfillmentCard';
 import OrderFulfillmentHeader from '../../components/OrderFulfillmentHeader';
 import OrderFulfillmentLabel from '../../components/OrderFulfillmentLabel';
+import { toast } from 'react-hot-toast';
 
 function AdminOrderFulfillment() {
   const [mergedOrders, setMergedOrders] = useState([]);
@@ -53,6 +54,7 @@ function AdminOrderFulfillment() {
 
       // 3. Remove confirmed order from view
       fetchData();
+      toast("Confirmed order.");
 
     } catch (err) {
       console.error("Error confirming order:", err);

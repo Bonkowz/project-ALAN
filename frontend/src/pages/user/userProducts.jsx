@@ -7,6 +7,7 @@ import cartImg from '../../assets/images/shopping_cart.png'
 import menuImg from '../../assets/images/menu.png'
 import { UserContext } from '../../context/userContext';
 import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
 function UserProducts() {
     const [products, setProducts] = useState([]);
@@ -65,6 +66,7 @@ function UserProducts() {
             const result = await response.json();
             if (response.ok) {
                 console.log(result.message);
+                toast("Added item to cart!");
             } else {
                 console.error('Error:', result.error);
             }
@@ -85,22 +87,22 @@ function UserProducts() {
                     <img src={logoImg} className="mx-5 h-20" />
                     <p className="text-4xl font-serif my-1 text-[#FEFAE0]">| Product Listings </p>
                 </div>
-                <div>
-                    <button className="w-20 h-10 bg-[#606C38] text-[#FEFAE0] rounded-[25px] m-1"
-                        onClick={() => logout() }> logout
+                <div className="flex items-center mr-4">
+                    <button onClick={() => handleNavigate('/cart')} id="cartButton">
+                        <img src={cartImg} className="mx-5 h-10" />
                     </button>
 
-                <button onClick={() => handleNavigate('/cart')} id="cartButton">
-                    <img src={cartImg} className="mx-5 h-10" />
-                </button>
+                    <button onClick={() => handleNavigate('/orders')} id="cartButton">
+                        <img src={menuImg} className="mx-5 h-10" />
+                    </button>
 
-                <button onClick={() => handleNavigate('/orders')} id="cartButton">
-                    <img src={menuImg} className="mx-5 h-10" />
-                </button>
+                    <button className="w-20 h-10 bg-[#BC6C25] text-[#FEFAE0] rounded-[25px] m-1" id="cartButton"
+                        onClick={() => logout()}> logout
+                    </button>
+                </div>
             </div>
-        </div>
 
-            {/* dropdown */ }
+            {/* dropdown */}
             <div className="flex justify-end mr-3">
                 <AdminProductDropDown
                     selected={sortChoice}
@@ -109,6 +111,8 @@ function UserProducts() {
                     onToggleOrder={() => setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'))}
                 />
             </div>
+
+            <br />
 
             <div className="flex flex-wrap gap-4 justify-center items-center">
                 {

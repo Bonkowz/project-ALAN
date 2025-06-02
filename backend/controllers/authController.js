@@ -32,7 +32,8 @@ export const registerAdmin = async (req, res) => {
 }
 
 export const login = async (req, res) => {
-    const { email, password } = req.body;
+    const email = req.body.email ? req.body.email.trim() : "";
+    const { password } = req.body;
     const user = await User.findOne({ email });
     try {
         if (!user) {
@@ -51,7 +52,7 @@ export const login = async (req, res) => {
                 userType: user.userType
             },
             process.env.SECRET_KEY,
-            { expiresIn: '1hr' }, // NOTE: cookies dies after 1hr
+            {}, 
             (err, token) => {
                 if (err) throw err;
                 res

@@ -27,7 +27,7 @@ function DashboardHeader() {
             </div>
 
             {/* Sign Out */}
-            <button className="w-20 h-10 rounded-[25px]" onClick={logout}>
+            <button className="w-20 h-10 rounded-[25px]" id="cartButton" onClick={logout}>
                 <img src={signOutImg} className="h-10" />
             </button>
         </div>

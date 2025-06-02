@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-// Assuming you have an icon/logo for Project ALAN, replace with actual path
-// import projectAlanIcon from "../assets/images/project-alan-icon.png";
-
-// TODO: fix design of page
+import logoImg from "../assets/images/logo_placeholder2.jpg";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -34,7 +31,7 @@ const Signup = () => {
   }
 
   const handleSubmit = (event) => {
-    event.preventDefault(); 
+    event.preventDefault();
     axios
       .post('http://localhost:5000/auth/register', { email, firstName, middleName, lastName, password })
       .then(() => {
@@ -52,102 +49,91 @@ const Signup = () => {
       .catch((error) => {
         alert('Unable to register user')
         console.log('Unable to register user')
+        toast.error("Unable to register user.");
       });
   }
 
   return (
-    // Use a similar background color and center the content as per the image
-    <div className="flex flex-col items-center justify-center min-h-screen bg-[#FEFAE0] text-gray-800 px-4">
-      {/* Container for the sign-up form - Adjusted styling to match image */}
-      <div className="bg-white p-8 rounded-[25px] shadow-md w-full max-w-sm">
-        {/* Project ALAN Logo/Icon and text - Styled to match the image */}
-        <div className="flex items-center mb-6">
-          {/* Icon placeholder - replace with your actual icon component or tag */}
-          {/* This div mimics the icon's appearance */}
-          <div className="w-8 h-8 bg-[#606C38] rounded-full mr-2 flex items-center justify-center text-[#FEFAE0] text-sm font-bold"> {/* Placeholder for icon */}
-            {/* You could add an SVG or image here */}🌱
-          </div>
-          <p className="font-serif text-lg text-[#606C38]">Project <i>ALAN</i></p>
+    <div className="min-h-screen bg-[#FEFAE0] flex items-center justify-center p-4">
+      <div className="w-full max-w-6xl bg-white rounded-[48px] flex flex-col p-8 shadow-none border-0 min-h-[750px] relative">
+        {/* Logo at top left */}
+        <div className="absolute top-8 left-8 flex items-center gap-3">
+          <img
+            src={logoImg}
+            alt="Logo"
+            className="w-25 h-25 object-contain"
+          />
         </div>
 
-        <h1 className="text-3xl font-bold mb-2 text-gray-800">Sign up</h1>
-        <p className="text-gray-600 mb-6">Create an account.</p>
+        {/* Split content into two columns - Increased margin-top */}
+        <div className="w-full h-full flex items-center justify-between mt-48 px-16"> {/* Changed mt-32 to mt-48 */}
+          {/* Left side - Header */}
+          <div className="flex-1 flex flex-col items-start justify-center">
+            <div className="w-full max-w-md">
+              <h1 className="text-5xl font-serif font-bold text-[#38471C] mb-4">Sign up</h1>
+              <p className="text-[#606C38] text-xl">Create an account.</p>
+            </div>
+          </div>
 
-        <div>
-          <form onSubmit={handleSubmit}>
-            {/* firstName */}
-            <div className="mb-4 flex items-center border border-gray-300 rounded-md bg-gray-200 px-3">
-              <span className="mr-2 text-gray-500">👤</span>
-              <input
-                type="text"
-                placeholder="enter firstName"
-                className="w-full py-2 bg-gray-200 focus:outline-none focus:ring-0 text-gray-700 placeholder-gray-500"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                required
-              />
-            </div>
-            {/* middleName */}
-            <div className="mb-4 flex items-center border border-gray-300 rounded-md bg-gray-200 px-3">
-              <span className="mr-2 text-gray-500">👤</span>
-              <input
-                type="text"
-                placeholder="enter middleName"
-                className="w-full py-2 bg-gray-200 focus:outline-none focus:ring-0 text-gray-700 placeholder-gray-500"
-                value={middleName}
-                onChange={(e) => setMiddleName(e.target.value)}
-                required
-              />
-              {/* lastName */}
-            </div>
-            <div className="mb-4 flex items-center border border-gray-300 rounded-md bg-gray-200 px-3">
-              <span className="mr-2 text-gray-500">👤</span>
-              <input
-                type="text"
-                placeholder="enter lastName"
-                className="w-full py-2 bg-gray-200 focus:outline-none focus:ring-0 text-gray-700 placeholder-gray-500"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+          {/* Right side - Form */}
+          <div className="flex-1 flex flex-col items-center justify-center">
+            <div className="w-full max-w-md">
+              <form onSubmit={handleSubmit} className="space-y-6"> {/* Changed from space-y-4 to match spacing */}
+                {/* Name Fields Row */}
+                <div className="flex gap-4">
+                  <div className="flex-1">
+                    <input
+                      type="text"
+                      placeholder="first name"
+                      className="w-full px-5 py-3 border-2 border-[#606C38] rounded-[16px] bg-[#E9EDC9] text-lg font-serif focus:outline-none focus:ring-2 focus:ring-[#606C38]"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <input
+                      type="text"
+                      placeholder="last name"
+                      className="w-full px-5 py-3 border-2 border-[#606C38] rounded-[16px] bg-[#E9EDC9] text-lg font-serif focus:outline-none focus:ring-2 focus:ring-[#606C38]"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Email Input */}
+                <input
+                  type="email"
+                  placeholder="enter email"
+                  className="w-full px-5 py-3 border-2 border-[#606C38] rounded-[16px] bg-[#E9EDC9] text-lg font-serif focus:outline-none focus:ring-2 focus:ring-[#606C38]"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
-              />
+                />
+
+                {/* Password Input */}
+                <input
+                  type="password"
+                  placeholder="enter password"
+                  className="w-full px-5 py-3 border-2 border-[#606C38] rounded-[16px] bg-[#E9EDC9] text-lg font-serif focus:outline-none focus:ring-2 focus:ring-[#606C38]"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$"
+                  required
+                />
+
+                {/* Sign Up Button - Removed mt-6 since spacing is handled by form's space-y-6 */}
+                <button
+                  type="submit"
+                  className="w-full bg-[#BC6C25] text-[#FEFAE0] py-3 rounded-2xl text-xl font-bold hover:bg-[#d89d61] transition duration-200"
+                >
+                  sign up
+                </button>
+              </form>
             </div>
-            {/* Email Input with Icon - Styled to match the image */}
-            <div className="mb-4 flex items-center border border-gray-300 rounded-md bg-gray-200 px-3">
-              {/* Icon placeholder for email */}
-              <span className="mr-2 text-gray-500">👤</span> {/* Placeholder icon */}
-              <input
-                type="email"
-                placeholder="enter email"
-                className="w-full py-2 bg-gray-200 focus:outline-none focus:ring-0 text-gray-700 placeholder-gray-500"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            {/* Password Input with Icon - Styled to match the image */}
-            <div className="mb-4 flex items-center border border-gray-300 rounded-md bg-gray-200 px-3">
-              {/* Icon placeholder for password */}
-              <span className="mr-2 text-gray-500">🔒</span> {/* Placeholder icon */}
-              <input
-                type="password"
-                placeholder="enter password"
-                className="w-full py-2 bg-gray-200 focus:outline-none focus:ring-0 text-gray-700 placeholder-gray-500"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                // NOTE: 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit
-                pattern='^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$'
-                required
-              />
-            </div>
-            {/* Sign Up Button - Styled to match the image */}
-            <button
-              className="w-full bg-[#BC6C25] text-[#FEFAE0] py-2 rounded-md hover:bg-[#d89d61] transition duration-200 font-bold text-lg"
-              // onClick={() => {handleSubmit()}} 
-              type='submit'
-            >
-              Sign up
-            </button>
-          </form>
+          </div>
         </div>
       </div>
     </div>
