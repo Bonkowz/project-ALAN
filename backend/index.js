@@ -3,10 +3,10 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import productRouter from '../routes/productRouter.js'; // Adjust paths as needed
-import transactionRouter from '../routes/transactionRouter.js';
-import userRouter from '../routes/userRouter.js';
-import authRouter from '../routes/authRouter.js';
+import productRouter from './routes/productRouter.js'; // Adjust paths as needed
+import transactionRouter from './routes/transactionRouter.js';
+import userRouter from './routes/userRouter.js';
+import authRouter from './routes/authRouter.js';
 import cookieParser from 'cookie-parser';
 
 // Load environment variables *before* any other code might use them
