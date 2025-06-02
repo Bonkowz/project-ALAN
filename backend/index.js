@@ -16,8 +16,11 @@ const PORT = 5000;
 
 // NOTE: middleware
 app.use(
-  cors()
-);
+  cors({
+    origin: `${import.meta.env.FRONTEND_URL}`,
+    credentials: true,
+  }
+  ));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }))
