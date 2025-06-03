@@ -8,6 +8,7 @@ import menuImg from "../../assets/images/menu.png";
 import { UserContext } from "../../context/userContext";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import signOutImg from "../assets/images/sign_out.png";
 
 function UserProducts() {
   const [products, setProducts] = useState([]);
