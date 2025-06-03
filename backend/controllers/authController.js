@@ -78,7 +78,6 @@ export const login = async (req, res) => {
             httpOnly: true,
             secure: true,
             sameSite: "None",
-            partitioned: true,
           })
           .json(user);
       }
@@ -107,7 +106,6 @@ export const logout = async (req, res) => {
     httpOnly: true,
     sameSite: "None",
     secure: true,
-    partitioned: true,
   });
   res.status(200).json({ success: true, message: "Logged out successfully" });
 };
