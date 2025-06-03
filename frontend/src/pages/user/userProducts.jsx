@@ -112,7 +112,6 @@ function UserProducts() {
             id="cartButton"
             onClick={() => logout()}
           >
-            {" "}
             logout
           </button>
         </div>
