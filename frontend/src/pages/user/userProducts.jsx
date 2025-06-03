@@ -107,12 +107,13 @@ function UserProducts() {
             <img src={menuImg} className="mx-5 h-10" />
           </button>
 
+          {/* Sign Out */}
           <button
-            className="w-20 h-10 bg-[#BC6C25] text-[#FEFAE0] rounded-[25px] m-1"
+            className="w-20 h-10 rounded-[25px]"
             id="cartButton"
-            onClick={() => logout()}
+            onClick={logout}
           >
-            logout
+            <img src={signOutImg} className="h-10" />
           </button>
         </div>
       </div>
