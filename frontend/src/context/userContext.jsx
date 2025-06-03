@@ -9,7 +9,7 @@ export function UserContextProvider({children}) {
     console.log('User state in context:', user);
     useEffect(() => {
         if (user === null && loading === true) {
-            axios.get('/auth/profile')
+            axios.get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/auth/profile`)
                 .then(({data}) => {
                     console.log('User data from profile:', data);
                     if (data && Object.keys(data).length > 0) {
