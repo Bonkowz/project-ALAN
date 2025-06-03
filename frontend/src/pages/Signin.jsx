@@ -1,10 +1,10 @@
-import { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../context/userContext';
-import axios from 'axios';
+import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/userContext";
+import axios from "axios";
 import logoImg from "../assets/images/logo_placeholder.png";
 import signinHeaderImg from "../assets/images/signInheader.jpg";
-import { toast } from 'react-hot-toast';
+import { toast } from "react-hot-toast";
 
 // TODO: fix design of page
 
@@ -17,8 +17,8 @@ const Signin = () => {
   };
 
   const [users, setUsers] = useState([]);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     fetchUsers();
@@ -26,37 +26,40 @@ const Signin = () => {
 
   const fetchUsers = () => {
     axios
-      .get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/user/get-all-customers`)
+      .get(
+        `${
+          import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
+        }/user/get-all-customers`
+      )
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data);
       });
-  }
+  };
 
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/auth/login`, 
-        { email, password }, 
-        {withCredentials: true}
-      )
-      const token = response.data.token
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/auth/login`,
+        { email, password },
+        { withCredentials: true }
+      );
+      const token = response.data.token;
 
       const loggedInUserType = response.data.userType;
-      setEmail('')
-      setPassword('')
+      setEmail("");
+      setPassword("");
       fetchUsers();
 
-      localStorage.setItem('token', token)
-      if (loggedInUserType === 'administrator') {
-        navigate('/admin/dashboard');
-      } else if (loggedInUserType === 'customer') {
-        navigate('/products');
+      localStorage.setItem("token", token);
+      if (loggedInUserType === "administrator") {
+        navigate("/admin/dashboard");
+      } else if (loggedInUserType === "customer") {
+        navigate("/products");
       } else {
-        navigate('/');
+        navigate("/");
       }
       window.location.reload();
-
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         toast.error("Login failed. Please try again.");
@@ -65,7 +68,7 @@ const Signin = () => {
       }
       console.error("Login Error:", error);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-[#FEFAE0] flex items-center justify-center">
@@ -83,12 +86,19 @@ const Signin = () => {
             </div>
             {/* Logo and Title */}
             <div className="relative z-10 h-full flex flex-col items-center justify-center">
-              <img src={logoImg} alt="Logo" className="w-40 h-40 object-contain drop-shadow-lg" />
+              <img
+                src={logoImg}
+                alt="Logo"
+                className="w-40 h-40 object-contain drop-shadow-lg"
+              />
             </div>
           </div>
           {/* Form Card */}
           <div className="w-full flex flex-col items-center justify-center px-8 py-10">
-            <form onSubmit={handleLogin} className="w-full flex flex-col gap-6 items-center justify-center">
+            <form
+              onSubmit={handleLogin}
+              className="w-full flex flex-col gap-6 items-center justify-center"
+            >
               {/* Email Input */}
               <input
                 type="text"
@@ -110,17 +120,17 @@ const Signin = () => {
               {/* Login Button */}
               <button
                 className="w-full bg-[#606C38] text-[#FEFAE0] py-3 rounded-[16px] text-xl font-bold font-serif hover:bg-[#7a8646] transition duration-200"
-                type='submit'
+                type="submit"
               >
                 log in
               </button>
             </form>
             {/* Sign Up Link */}
             <p className="text-center text-xl mt-10 font-serif text-[#38471C]">
-              Don't have an account yet?{' '}
+              Don't have an account yet?{" "}
               <span
                 className="text-[#BC6C25] hover:underline cursor-pointer font-semibold"
-                onClick={() => handleNavigate('/signup')}
+                onClick={() => handleNavigate("/signup")}
               >
                 Sign up
               </span>
