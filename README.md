@@ -119,3 +119,4 @@ This is the first page. It contains **Login** and **Sign Up** buttons for authen
    - npm run dev
 3. Open your browser and go to:
    - http://localhost:5173
+Alternatively you can access: https://project-alan-bank.vercel.app/
