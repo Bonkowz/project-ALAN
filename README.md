@@ -1,39 +1,26 @@
-# PROJECT ALAN
+# 🌾 ALAN
+Short for agriculture livestock assets network, this is an agricultural stock management site tailored for sellers and buyers. The site was built using the MERN stack and can be run locally on a machine or accessed through the Vercel link. Implements basic operations such as security through logins, adding/removing/tracking products, and basic online shopping operations.
 
-**Section**: C-4L  
-**Team Members**:
-- Joy Christine Laura Guevarra  
-- Hans Dean Guzman  
-- Alan Benedict Vender  
-
----
-
-## Project Features
-
-### 🔐 Authentication
-
-#### Landing Page
-This is the first page. It contains **Login** and **Sign Up** buttons for authentication.
-
+## 🔐 Security
+### Landing Page
+- This is the first page. It contains **Login** and **Sign Up** buttons for authentication.
+  
 ![Landing](readme_images/landing.png)
 
-#### Login Page
+### Login Page
 - User is asked to log in with **email** and **password**.
 - The account must exist in the database; otherwise, the login will fail.
 - Includes a **Sign Up** text button to redirect to the Sign Up page.
   
 ![Login](readme_images/login.png)
 
-#### Sign Up Page
+### Sign Up Page
 - User is asked to register with their **first name**, **last name**, **email**, and **password**.
 - The password will be **encrypted** in the database.
-  
+
 ![SignUp](readme_images/signup.png)
 
----
-
-## Customer Side
-
+## 👤 Customer Accessibility
 ### Product Listing
 - Displays a list of products from the database.
 - Entries can be **sorted** by name, type, price, or quantity using a drop-down menu.
@@ -43,7 +30,7 @@ This is the first page. It contains **Login** and **Sign Up** buttons for authen
 - A **hamburger menu** leads to transaction history.
 - Includes a **logout** button.
 - Clicking the **logo** in the header navigates back to the product listings.
-  
+
 ![UserProducts](readme_images/user_products.png)
 
 ### Shopping Cart
@@ -61,10 +48,7 @@ This is the first page. It contains **Login** and **Sign Up** buttons for authen
 
 ![UserOrders](readme_images/user_order.png)
 
----
-
-## Admin Side
-
+## 🧑‍🌾 Admin Control
 ### Dashboard
 - Admin is directed here after logging in.
 - Contains **navigation buttons** for admin pages.
@@ -85,7 +69,7 @@ This is the first page. It contains **Login** and **Sign Up** buttons for authen
 - Displays **pending transactions** from the database.
 - Admin can **confirm** transactions, marking them as completed.
 - Clicking the **logo** in the header navigates to the dashboard.
-
+  
 ![AdminOrder](readme_images/admin_order.png)
 
 ### Manage Users
@@ -102,22 +86,27 @@ This is the first page. It contains **Login** and **Sign Up** buttons for authen
 
 ![AdminProductSales](readme_images/admin_sales_product.png)
 ![AdminTransactionSales](readme_images/admin_sales_transaction.png)
----
 
-## Usage Guidelines
-
+## ⚙️ Setting Up!
 1. Ensure you have a `.env` file with your own **MongoDB `authKey`**.
-2. Run `npm i` inside both the `backend` and `frontend` directories (❗️**not in root**).
+2. Run `npm i` inside both the `backend` and `frontend` directories (**not in root!**).
 
----
-
-## How to Run
-
+## 🏃‍♂️‍➡️ How to Run?
 1. Navigate to the `backend` directory on the terminal and run:
-   - node index.js
+```bash
+node index.js
+```
 2. Navigate to the `frontend` directory on the terminal and run:
-   - npm run dev
-3. Open your browser and go to:
-   - http://localhost:5173
+```bash
+npm run dev
+```
+3. Open your browser and go to `http://localhost:5173`:
 
-Alternatively you can access: https://project-alan-bank.vercel.app/
+Alternatively you can access this Vercel link: https://project-alan-bank.vercel.app/
+
+## 👨‍💻 Team
+**Section**: C-4L   
+- Joy Christine Laura Guevarra  
+- Hans Dean Guzman  
+- Alan Benedict Vender
+  
