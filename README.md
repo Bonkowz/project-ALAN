@@ -1,5 +1,5 @@
 # 🌾 ALAN
-Short for agriculture livestock assets network, this is an agricultural stock management site tailored for sellers and buyers. The site was built using the MERN stack and can be run locally on a machine or accessed through the Vercel link. Implements basic operations such as security through logins, adding/removing/tracking products, and basic online shopping operations.
+Short for agriculture livestock assets network, this project is an agricultural stock management site tailored for sellers and buyers. The site was built using the MERN stack and can be run locally on a machine or accessed through the Vercel link. Features basic operations such as security through logins, adding/removing/tracking of products, and basic online shopping operations.
 
 ## 🔐 Security
 ### Landing Page
